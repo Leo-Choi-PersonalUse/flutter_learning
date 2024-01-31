@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/theme/AppTheme.dart';
 import '../components/drawer/AppDrawer.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -10,7 +11,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: AppTheme.of(context).appBar,
         title: Text(title),
       ),
       drawer: AppDrawer(),

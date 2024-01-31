@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'theme/color.dart';
 import 'pages/MyHomePage.dart';
 import 'Index.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -58,8 +57,14 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       //theme: appState.isDarkTheme ? ThemeData.dark() : ThemeData.light(),
-      theme: lightModeTheme,
-      darkTheme: darkModeTheme,
+      theme: ThemeData(
+        brightness: Brightness.light,
+        scrollbarTheme: ScrollbarThemeData(),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scrollbarTheme: ScrollbarThemeData(),
+      ),
       themeMode: _themeMode,
       home: const Index(),
     );
