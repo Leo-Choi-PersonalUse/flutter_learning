@@ -45,27 +45,9 @@ abstract class AppTheme {
   late Color secondaryText;
   late Color primaryBackground;
   late Color secondaryBackground;
-  late Color accent1;
-  late Color accent2;
-  late Color accent3;
-  late Color accent4;
   late Color success;
   late Color warning;
   late Color error;
-  late Color info;
-  late Color header;
-  late Color fontbackground;
-
-  late Color primaryBtnText;
-  late Color lineColor;
-  late Color inputFill;
-  late Color inputBorder;
-  late Color button;
-  late Color buttonBorder;
-  late Color formLabel;
-  late Color tableOdd;
-  late Color tableEven;
-  late Color inputText;
   late Color appBar;
 
   @Deprecated('Use displaySmallFamily instead')
@@ -147,28 +129,9 @@ class LightModeTheme extends AppTheme {
   late Color secondaryText = const Color(0xFF57636C);
   late Color primaryBackground = const Color(0xFFF1F4F8);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
-  late Color accent1 = const Color(0x4C4B39EF);
-  late Color accent2 = const Color(0x4D39D2C0);
-  late Color accent3 = const Color(0x4DEE8B60);
-  late Color accent4 = const Color(0xCCFFFFFF);
   late Color success = const Color(0xFF249689);
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
-  late Color info = const Color(0xFFFFFFFF);
-  late Color header = const Color(0xFFFFD754);
-  late Color fontbackground = const Color(0xFF404040);
-
-
-  late Color primaryBtnText = Color(0xFFFFFFFF);
-  late Color lineColor = Color(0xFFE0E3E7);
-  late Color inputFill = Color(0xFF9CADDA);
-  late Color inputBorder = Color(0xFF4D78C6);
-  late Color button = Color(0xFF4472C4);
-  late Color buttonBorder = Color(0xFF2F528F);
-  late Color formLabel = Color(0xFF7F7F7F);
-  late Color tableOdd = Color(0xFFE9EBF5);
-  late Color tableEven = Color(0xFFCFD5EA);
-  late Color inputText = Color(0xFF000000);
   late Color appBar = Color(0xFF4472C4);
 
 }
@@ -264,14 +227,14 @@ class ThemeTypography extends Typography {
   String get titleMediumFamily => 'Readex Pro';
   TextStyle get titleMedium => GoogleFonts.getFont(
         'Readex Pro',
-        color: theme.info,
+        color: theme.secondary,
         fontWeight: FontWeight.w500,
         fontSize: 18.0,
       );
   String get titleSmallFamily => 'Readex Pro';
   TextStyle get titleSmall => GoogleFonts.getFont(
         'Readex Pro',
-        color: theme.info,
+        color: theme.secondary,
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
       );
@@ -336,27 +299,9 @@ class DarkModeTheme extends AppTheme {
   late Color secondaryText = const Color(0xFF95A1AC);
   late Color primaryBackground = const Color(0xFF1D2428);
   late Color secondaryBackground = const Color(0xFF14181B);
-  late Color accent1 = const Color(0x4C4B39EF);
-  late Color accent2 = const Color(0x4D39D2C0);
-  late Color accent3 = const Color(0x4DEE8B60);
-  late Color accent4 = const Color(0xB2262D34);
   late Color success = const Color(0xFF249689);
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
-  late Color info = const Color(0xFFFFFFFF);
-  late Color header = const Color(0xFFFFD754);
-  late Color fontbackground = const Color(0xFF404040);
-
-  late Color primaryBtnText = Color(0xFFFFFFFF);
-  late Color lineColor = Color(0xFF22282F);
-  late Color inputFill = Color(0xFFB27177);
-  late Color inputBorder = Color(0xFFCF483B);
-  late Color button = Color(0xFF2F5FB3);
-  late Color buttonBorder = Color(0xFF6FBBCD);
-  late Color formLabel = Color(0xFF0D09F4);
-  late Color tableOdd = Color(0xFFB88204);
-  late Color tableEven = Color(0xFFD0E6F2);
-  late Color inputText = Color(0xFF523898);
   late Color appBar = Color(0xFF22D70E);
 }
 
