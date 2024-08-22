@@ -1,0 +1,4 @@
+enum fieldDirection {
+  vertical,
+  horizontal,
+}

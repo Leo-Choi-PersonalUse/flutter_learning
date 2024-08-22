@@ -5,16 +5,16 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import './ApplicationFormPage.dart';
 import './AppFormBuilder.dart';
 
-class MyMenu extends StatefulWidget {
-  const MyMenu({Key? key, required this.title}) : super(key: key);
+class MenuPage extends StatefulWidget {
+  const MenuPage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyMenu> createState() => _MyMenuState();
+  State<MenuPage> createState() => _MenuPageState();
 }
 
-class _MyMenuState extends State<MyMenu> {
+class _MenuPageState extends State<MenuPage> {
   //List<String> items = ["Application Form", "Setting", "Menu","Form Builder",'Modal'];
 
   List<dynamic> items = [

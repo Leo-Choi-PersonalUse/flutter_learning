@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '/theme/AppTheme.dart';
 import '../components/drawer/AppDrawer.dart';
 
-class MyHomePage extends StatelessWidget {
+class LandingPage extends StatelessWidget {
   @override
-  const MyHomePage({super.key, required this.title});
+  const LandingPage({super.key, required this.title});
 
   final String title;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'pages/MyHomePage.dart';
-import 'Index.dart';
+import 'pages/landing_page.dart';
+import 'HomePage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'CounterModel.dart';
@@ -24,18 +24,18 @@ void main() async {
 
   runApp(ChangeNotifierProvider(
     create: (context) => appState,
-    child: MyApp(),
+    child: App(),
   ));
 }
 
-class MyApp extends StatefulWidget {
+class App extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _AppState createState() => _AppState();
 
-  static _MyAppState of(BuildContext context) => context.findAncestorStateOfType<_MyAppState>()!;
+  static _AppState of(BuildContext context) => context.findAncestorStateOfType<_AppState>()!;
 }
 
-class _MyAppState extends State<MyApp> {
+class _AppState extends State<App> {
   //App State
   //AppState appState = AppState.instance;
   ThemeMode _themeMode = AppTheme.themeMode;
@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
         scrollbarTheme: ScrollbarThemeData(),
       ),
       themeMode: _themeMode,
-      home: const Index(),
+      home: const HomePage(),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../pages/MyHomePage.dart';
-import '../../pages/MyMenu.dart';
+import '../../pages/landing_page.dart';
+import '../../pages/menu_page.dart';
 import '../../pages/SettingPage.dart';
 
 
