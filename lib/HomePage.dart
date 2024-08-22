@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'pages/MyHomePage.dart';
-import 'pages/MyMenu.dart';
+import 'pages/landing_page.dart';
+import 'pages/menu_page.dart';
 import 'package:provider/provider.dart';
 import 'theme_model.dart';
 import 'main.dart';
@@ -8,19 +8,19 @@ import 'pages/SettingPage.dart';
 
 import './components/navigationBar/AppNavigationBar.dart';
 
-class Index extends StatefulWidget {
-  const Index({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<Index> createState() => _IndexState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _IndexState extends State<Index> {
+class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    MyHomePage(title: 'Home Page'),
-    MyMenu(title: "Menu Page"),
+    LandingPage(title: 'Home Page'),
+    MenuPage(title: "Menu Page"),
     SettingPage(title: "Setting Page"),
   ];
 
@@ -45,7 +45,7 @@ class _IndexState extends State<Index> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             //themeNotifier.isDark ? themeNotifier.isDark = false : themeNotifier.isDark = true;
-            MyApp.of(context).setThemeMode_invert();
+            App.of(context).setThemeMode_invert();
             //print(Navigator().pages.length);
           },
           tooltip: 'Increment',
