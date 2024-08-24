@@ -75,11 +75,9 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
       children: [
         Expanded(
           flex: 1,
-          child: Center(
-            child: Text(
-              title,
-              style: TextStyle(fontSize: fontSize),
-            ),
+          child: Text(
+            title,
+            style: TextStyle(fontSize: fontSize),
           ),
         ),
         Expanded(

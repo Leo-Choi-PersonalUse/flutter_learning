@@ -71,7 +71,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
 
   Widget CheckboxWidget_Horizontal({required List<Widget> rendering}) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 1,

@@ -68,7 +68,7 @@ class _RadioWidgetState extends State<RadioWidget> {
 
   Widget RadioWidget_Horizontal({required List<Widget> rendering}) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 1,

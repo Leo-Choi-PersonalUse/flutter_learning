@@ -76,11 +76,9 @@ class _TextWidgetState extends State<TextWidget> {
       children: [
         Expanded(
           flex: 1,
-          child: Center(
-            child: Text(
-              title,
-              style: TextStyle(fontSize: fontSize),
-            ),
+          child: Text(
+            title,
+            style: TextStyle(fontSize: fontSize),
           ),
         ),
         Expanded(
