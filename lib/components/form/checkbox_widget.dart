@@ -12,7 +12,7 @@ class CheckboxWidget extends StatefulWidget {
 
 class _CheckboxWidgetState extends State<CheckboxWidget> {
   late List<OptionObj> options = [];
-  late int rowItems = 2; // Number of items in a row
+  late int rowItems = 3; // Number of items in a row
   late bool isReadOnly;
   late String title;
   late double fontSize;
@@ -48,9 +48,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
       rendering.add(oneRow(rowItems, temp));
     }
 
-    return fieldDirection == FieldDirection.vertical
-        ? CheckboxWidget_Vertical(rendering: rendering)
-        : CheckboxWidget_Horizontal(rendering: rendering);
+    return fieldDirection == FieldDirection.vertical ? CheckboxWidget_Vertical(rendering: rendering) : CheckboxWidget_Horizontal(rendering: rendering);
   }
 
   Widget CheckboxWidget_Vertical({required List<Widget> rendering}) {
@@ -71,15 +69,17 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
 
   Widget CheckboxWidget_Horizontal({required List<Widget> rendering}) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          flex: 1,
-          child: Text(
-            title,
-            style: TextStyle(fontSize: fontSize),
-          ),
-        ),
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+              child: Text(
+                title,
+                style: TextStyle(fontSize: fontSize),
+              ),
+            )),
         Expanded(
           flex: 3,
           child: Column(
@@ -91,50 +91,69 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
   }
 
   Widget oneRow(int rowItems, List<OptionObj> items) {
+    List<Widget> children = items.map((e) {
+      return Expanded(
+        flex: 1,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Checkbox(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              value: selectedOptions[e.value],
+              onChanged: isReadOnly
+                  ? null
+                  : (bool? value) {
+                      setState(() {
+                        selectedOptions[e.value] = value!;
+                      });
+                    },
+            ),
+            GestureDetector(
+              onTap: isReadOnly
+                  ? null
+                  : () {
+                      setState(() {
+                        selectedOptions[e.value] = !selectedOptions[e.value]!;
+                      });
+                    },
+              child: Text(
+                e.label,
+                style: TextStyle(
+                  fontSize: fontSize,
+                ),
+                softWrap: true,
+              ),
+            ),
+          ],
+        ),
+      );
+    }).toList();
+
+    // If the number of items is less than rowItems, add a dummy Radio widget
+    if (items.length < rowItems) {
+      children.add(
+        Expanded(
+          flex: 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Visibility(
+                visible: false,
+                child: Checkbox(
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  value: false,
+                  onChanged: null,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return IntrinsicHeight(
       child: Row(
-        children: [
-          ...items.map((e) {
-            return Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Checkbox(
-                    value: selectedOptions[e.value],
-                    onChanged: isReadOnly
-                        ? null
-                        : (bool? value) {
-                            setState(() {
-                              selectedOptions[e.value] = value!;
-                              //if (checkBoxInputCallback != null) checkBoxInputCallback!();
-                            });
-                          },
-                  ),
-                  GestureDetector(
-                    onTap: isReadOnly
-                        ? null
-                        : () {
-                            setState(() {
-                              selectedOptions[e.value] = !selectedOptions[e.value]!;
-                              //if (checkBoxInputCallback != null) checkBoxInputCallback!();
-                            });
-                          },
-                    child: Text(
-                      e.label,
-                      style: TextStyle(
-                        fontSize: fontSize,
-                        //color: GlobalFunctions.hexToColor(taskObj.attributes?["option_color"]),
-                        //fontWeight: GlobalFunctions?.getFontWeight(taskObj.attributes?["option_weight"]) ?? FontWeight.normal,
-                      ),
-                      //textAlign: ConstantValue().textAligenMap[taskObj.attributes?["option_alignment"]] ?? TextAlign.left,
-                      softWrap: true,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-        ],
+        children: children,
       ),
     );
   }

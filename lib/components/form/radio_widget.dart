@@ -68,13 +68,16 @@ class _RadioWidgetState extends State<RadioWidget> {
 
   Widget RadioWidget_Horizontal({required List<Widget> rendering}) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 1,
-          child: Text(
-            title,
-            style: TextStyle(fontSize: fontSize),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 9, 0, 0),
+            child: Text(
+              title,
+              style: TextStyle(fontSize: fontSize),
+            ),
           ),
         ),
         Expanded(
@@ -88,56 +91,79 @@ class _RadioWidgetState extends State<RadioWidget> {
   }
 
   Widget oneRow(int rowItems, List<OptionObj> items) {
+    List<Widget> children = items.map((e) {
+      return Expanded(
+        flex: 1,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Flexible(
+              child: Transform.scale(
+                scale: 1.1,
+                child: Radio(
+                  value: e.value as String,
+                  groupValue: selectedOption,
+                  onChanged: isReadOnly
+                      ? null
+                      : (String? value) {
+                          setState(() {
+                            selectedOption = value!;
+                          });
+                        },
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: isReadOnly
+                  ? null
+                  : () {
+                      setState(() {
+                        selectedOption = e.value;
+                      });
+                    },
+              child: Text(
+                e.label,
+                style: TextStyle(
+                  fontSize: fontSize,
+                ),
+                softWrap: true,
+              ),
+            ),
+          ],
+        ),
+      );
+    }).toList();
+
+    // If the number of items is less than rowItems, add a dummy Radio widget
+    if (items.length < rowItems) {
+      children.add(
+        Expanded(
+          flex: 1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Visibility(
+                visible: false,
+                child: Flexible(
+                  child: Transform.scale(
+                    scale: 1.1,
+                    child: Radio(
+                      value: '',
+                      groupValue: selectedOption,
+                      onChanged: null, // Dummy radio button is not selectable
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return IntrinsicHeight(
       child: Row(
-        children: [
-          ...items.map((e) {
-            return Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Flexible(
-                    child: Transform.scale(
-                      scale: 1.1,
-                      child: Radio(
-                        value: e.value as String,
-                        groupValue: selectedOption,
-                        //activeColor: Color(0xFFFFD754),
-                        onChanged: isReadOnly
-                            ? null
-                            : (String? value) {
-                                setState(() {
-                                  selectedOption = value!;
-                                  //if (checkBoxInputCallback != null) checkBoxInputCallback!();
-                                });
-                              },
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: isReadOnly
-                        ? null
-                        : () {
-                            setState(() {
-                              selectedOption = e.value;
-                              //if (checkBoxInputCallback != null) checkBoxInputCallback!();
-                            });
-                          },
-                    child: Text(
-                      e.label,
-                      style: TextStyle(
-                        fontSize: fontSize,
-                        //color: GlobalFunctions.hexToColor(taskObj.attributes?["option_color"]),
-                        //fontWeight: GlobalFunctions?.getFontWeight(taskObj.attributes?["option_weight"]) ?? FontWeight.normal,
-                      ),
-                      softWrap: true,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-        ],
+        children: children,
       ),
     );
   }

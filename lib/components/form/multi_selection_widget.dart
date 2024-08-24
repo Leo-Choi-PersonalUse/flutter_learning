@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "../../model/index.dart";
+import 'package:dropdown_search/dropdown_search.dart';
 
 class MultiSelectionWidget extends StatefulWidget {
   QuestionObj questionObj;
@@ -11,8 +12,90 @@ class MultiSelectionWidget extends StatefulWidget {
 }
 
 class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
+  late List<OptionObj> options = [];
+  late bool isReadOnly;
+  late String title;
+  late double fontSize;
+  late bool isVisible;
+  late FieldDirection fieldDirection = FieldDirection.vertical;
+
+  List<OptionObj> selectedOptions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    title = widget.questionObj.title;
+    fontSize = widget.questionObj.answer_fontSize;
+    isVisible = widget.questionObj.isVisible;
+    isReadOnly = widget.questionObj.isReadOnly;
+    fieldDirection = widget.questionObj.fieldDirection;
+    options = widget.questionObj.options;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Visibility(
+      visible: isVisible,
+      child: fieldDirection == FieldDirection.vertical ? RadioWidget_Vertical() : RadioWidget_Horizontal(),
+    );
+  }
+
+  Widget RadioWidget_Vertical() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(fontSize: fontSize),
+        ),
+        SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
+        DropdownSearch<OptionObj>.multiSelection(
+          enabled: !isReadOnly,
+          items: options,
+          itemAsString: (OptionObj u) => u.label,
+          compareFn: (OptionObj obj1, OptionObj obj2) {
+            return obj1.value == obj2.value;
+          },
+          onChanged: (List<OptionObj> obj) {
+            setState(() {
+              selectedOptions = obj;
+            });
+          },
+          selectedItems: selectedOptions,
+        ),
+      ],
+    );
+  }
+
+  Widget RadioWidget_Horizontal() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          flex: 1,
+          child: Text(
+            title,
+            style: TextStyle(fontSize: fontSize),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: DropdownSearch<OptionObj>.multiSelection(
+            enabled: !isReadOnly,
+            items: options,
+            itemAsString: (OptionObj u) => u.label,
+            compareFn: (OptionObj obj1, OptionObj obj2) {
+              return obj1.value == obj2.value;
+            },
+            onChanged: (List<OptionObj> obj) {
+              setState(() {
+                selectedOptions = obj;
+              });
+            },
+            selectedItems: selectedOptions,
+          ),
+        ),
+      ],
+    );
   }
 }
