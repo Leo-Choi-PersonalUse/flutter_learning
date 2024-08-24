@@ -19,12 +19,14 @@ class FormManager {
         return CheckboxWidget(questionObj: questionObj);
       case FieldType.radio:
         return RadioWidget(questionObj: questionObj);
-      case FieldType.single_select:
+      case FieldType.single_selection:
         return SingleSelectionWidget(questionObj: questionObj);
-      case FieldType.multi_select:
+      case FieldType.multi_selection:
         return MultiSelectionWidget(questionObj: questionObj);
       case FieldType.signture:
         return SignatureWidget(questionObj: questionObj);
+      case FieldType.photo:
+        return PhotoWidget(questionObj: questionObj);
     }
   }
 }

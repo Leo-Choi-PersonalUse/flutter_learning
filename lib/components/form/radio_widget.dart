@@ -34,6 +34,13 @@ class _RadioWidgetState extends State<RadioWidget> {
 
   @override
   Widget build(BuildContext context) {
+    return Visibility(
+      visible: isVisible,
+      child: radioWidget(),
+    );
+  }
+
+  Widget radioWidget() {
     List<Widget> rendering = [];
     int rows = (options.length / rowItems).ceil();
     for (int i = 0; i < rows; i++) {
@@ -44,9 +51,25 @@ class _RadioWidgetState extends State<RadioWidget> {
       rendering.add(oneRow(rowItems, temp));
     }
 
-    return Visibility(
-      visible: isVisible,
-      child: fieldDirection == FieldDirection.vertical ? RadioWidget_Vertical(rendering: rendering) : RadioWidget_Horizontal(rendering: rendering),
+    return FormField(
+      validator: (value) {
+        if (selectedOption.isEmpty) {
+          return 'Please select an option';
+        }
+        return null;
+      },
+      builder: (FormFieldState state) {
+        return Column(
+          children: [
+            fieldDirection == FieldDirection.vertical ? RadioWidget_Vertical(rendering: rendering) : RadioWidget_Horizontal(rendering: rendering),
+            if (state.hasError)
+              Text(
+                state.errorText!,
+                style: TextStyle(color: Colors.red),
+              ),
+          ],
+        );
+      },
     );
   }
 

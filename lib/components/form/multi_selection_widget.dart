@@ -19,6 +19,7 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
   late bool isVisible;
   late FieldDirection fieldDirection = FieldDirection.vertical;
 
+
   List<OptionObj> selectedOptions = [];
 
   @override

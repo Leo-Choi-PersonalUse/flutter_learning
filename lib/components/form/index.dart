@@ -6,3 +6,4 @@ export 'checkbox_widget.dart';
 export 'radio_widget.dart';
 export 'single_selection_widget.dart';
 export 'multi_selection_widget.dart';
+export 'photo_widget.dart';

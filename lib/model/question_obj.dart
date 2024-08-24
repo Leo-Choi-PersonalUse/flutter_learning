@@ -33,7 +33,8 @@ enum FieldType {
   textarea,
   checkbox,
   radio,
-  single_select,
-  multi_select,
+  single_selection,
+  multi_selection,
   signture,
+  photo,
 }
