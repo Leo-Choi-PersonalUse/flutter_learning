@@ -1,6 +1,12 @@
 import "package:flutter/material.dart";
 import "../../model/index.dart";
 import 'package:dotted_border/dotted_border.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import '../modal/photo_modal.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class PhotoWidget extends StatefulWidget {
   QuestionObj questionObj;
@@ -18,6 +24,8 @@ class _PhotoWidgetState extends State<PhotoWidget> {
   late bool isVisible;
   late FieldDirection fieldDirection = FieldDirection.vertical;
 
+  List<PhotoObj> photoList = <PhotoObj>[];
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +34,12 @@ class _PhotoWidgetState extends State<PhotoWidget> {
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
     fieldDirection = widget.questionObj.fieldDirection;
+  }
+
+  Future<void> addPhotoToList({required XFile photo}) async {
+    photoList.add(PhotoObj(base64: base64Encode(await photo.readAsBytes())));
+
+    setState(() {});
   }
 
   @override
@@ -56,45 +70,55 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                     child: addPhotoWidget(),
                   ),
                   onTap: () async {
-                    final XFile? photo = await ImagePicker()
-                        .pickImage(source: ImageSource.camera);
+                    var res = await showBarModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent.withOpacity(1),
+                      builder: (context) => PhotoModal(),
+                      barrierColor: Colors.transparent.withOpacity(0.4),
+                    );
 
-                    addPhotoToList(photo: photo!);
+                    res.forEach((element) {
+                      addPhotoToList(photo: element);
+                    });
 
-                    debugPrint("photo button pressed");
+                    // final XFile? photo = await ImagePicker().pickImage(source: ImageSource.camera);
+                    //
+                    // addPhotoToList(photo: photo!);
+                    //
+                    // debugPrint("photo button pressed");
 
                     //cameraSourceActionSheet();
                   },
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(
-                        photoList.length,
-                        (index) => GestureDetector(
-                          onTap: () {
-                            // photoPressed(index);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
+                  child: Container(
+                    height: 60,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: photoList.length, //_taskObj.photoObjList.length,
+                      itemBuilder: (BuildContext context, int index) => GestureDetector(
+                        onTap: () {
+                          //photoPressed(index);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey,
+                                width: 1.0,
                               ),
-                              width: 60,
-                              height: 60,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.memory(
-                                  base64Decode(photoList[index].base64!),
-                                  fit: BoxFit.cover,
-                                  gaplessPlayback: true,
-                                ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            width: 60,
+                            height: 60,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.memory(
+                                base64Decode(photoList[index].base64!),
+                                fit: BoxFit.cover,
+                                gaplessPlayback: true,
                               ),
                             ),
                           ),
