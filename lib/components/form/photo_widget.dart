@@ -1,8 +1,6 @@
 import "package:flutter/material.dart";
-import 'dart:convert';
 import "../../model/index.dart";
 import 'package:dotted_border/dotted_border.dart';
-import 'package:image_picker/image_picker.dart';
 
 class PhotoWidget extends StatefulWidget {
   QuestionObj questionObj;
@@ -13,26 +11,12 @@ class PhotoWidget extends StatefulWidget {
   State<PhotoWidget> createState() => _PhotoWidgetState();
 }
 
-class _PhotoWidgetState extends State<PhotoWidget> with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
+class _PhotoWidgetState extends State<PhotoWidget> {
   late bool isReadOnly;
   late String title;
   late double fontSize;
   late bool isVisible;
   late FieldDirection fieldDirection = FieldDirection.vertical;
-
-  //
-  List<PhotoObj> photoList = [];
-
-  Future<void> addPhotoToList({required XFile photo}) async {
-    final bytes = await photo!.readAsBytes();
-    final base64String = base64Encode(bytes);
-
-    photoList.add(PhotoObj(base64: base64String));
-    setState(() {});
-  }
 
   @override
   void initState() {
@@ -46,7 +30,6 @@ class _PhotoWidgetState extends State<PhotoWidget> with AutomaticKeepAliveClient
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Visibility(
       visible: isVisible,
       child: photoWidget(),
