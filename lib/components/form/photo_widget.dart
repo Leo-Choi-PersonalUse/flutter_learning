@@ -72,6 +72,9 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                   onTap: () async {
                     var res = await showBarModalBottomSheet(
                       context: context,
+                      animationCurve: null,
+                      duration: Duration(milliseconds: 300),
+                      closeProgressThreshold: 0.0,
                       backgroundColor: Colors.transparent.withOpacity(1),
                       builder: (context) => PhotoModal(),
                       barrierColor: Colors.transparent.withOpacity(0.4),
