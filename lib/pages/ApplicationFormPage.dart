@@ -26,7 +26,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
 
   List<QuestionObj> question = [
     // QuestionObj(title: "標目", fieldType: FieldType.heading),
-    // QuestionObj(title: "文字", fieldType: FieldType.text),
+    QuestionObj(title: "文字", fieldType: FieldType.text),
     // QuestionObj(title: "文字", fieldType: FieldType.text, fieldDirection: FieldDirection.horizontal),
     // QuestionObj(title: "多行文字", fieldType: FieldType.textarea),
     // //QuestionObj(title: "簽名", fieldType: FieldType.signture),
@@ -124,7 +124,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Color(0xFFFFD754),
         title: Text("Application Form"),
       ),
       body: Form(
