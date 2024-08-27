@@ -7,6 +7,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import '../modal/photo_modal.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import '../photo_viewer.dart';
 
 class PhotoWidget extends StatefulWidget {
   QuestionObj questionObj;
@@ -72,7 +73,7 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                   onTap: () async {
                     var res = await showBarModalBottomSheet(
                       context: context,
-                      animationCurve: null,
+                      animationCurve: Curves.easeInOut,
                       duration: Duration(milliseconds: 300),
                       closeProgressThreshold: 0.0,
                       backgroundColor: Colors.transparent.withOpacity(1),
@@ -83,14 +84,6 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                     res.forEach((element) {
                       addPhotoToList(photo: element);
                     });
-
-                    // final XFile? photo = await ImagePicker().pickImage(source: ImageSource.camera);
-                    //
-                    // addPhotoToList(photo: photo!);
-                    //
-                    // debugPrint("photo button pressed");
-
-                    //cameraSourceActionSheet();
                   },
                 ),
                 Expanded(
@@ -103,9 +96,15 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                       itemBuilder: (BuildContext context, int index) => GestureDetector(
                         onTap: () {
                           //photoPressed(index);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PhotoViewer(photoList: photoList,initialIndex: index,),
+                            ),
+                          );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(left: index == 0 ? 0 : 10),
                           child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -139,21 +138,24 @@ class _PhotoWidgetState extends State<PhotoWidget> {
   }
 
   Widget addPhotoWidget() {
-    return DottedBorder(
-      dashPattern: [6, 6, 6, 6],
-      borderType: BorderType.RRect,
-      color: Color(0xFFBBBBBB),
-      //color: field.errorText != null ? Colors.red : Color(0xFFBBBBBB),
-      radius: Radius.circular(12),
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-        child: Container(
-          height: 55,
-          width: 55,
+    return Padding(
+      padding: EdgeInsets.only(right: 10),
+      child: DottedBorder(
+        dashPattern: [6, 6, 6, 6],
+        borderType: BorderType.RRect,
+        color: Color(0xFFBBBBBB),
+        //color: field.errorText != null ? Colors.red : Color(0xFFBBBBBB),
+        radius: Radius.circular(12),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
           child: Container(
-            child: Icon(Icons.add_a_photo, color: Color(0xFFBBBBBB)),
+            height: 55,
+            width: 55,
+            child: Container(
+              child: Icon(Icons.add_a_photo, color: Color(0xFFBBBBBB)),
+            ),
+            //img_add_photo
           ),
-          //img_add_photo
         ),
       ),
     );

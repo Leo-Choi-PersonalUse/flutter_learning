@@ -28,7 +28,10 @@ class _PhotoModalState extends State<PhotoModal> {
         ListTile(
           title: Text('相片'),
           leading: Icon(Icons.photo),
-          onTap: () => Navigator.of(context).pop(),
+          onTap: () async {
+            List<XFile>? files = await ImagePicker().pickMultiImage();
+            Navigator.of(context, rootNavigator: true).pop(files ?? []);
+          },
         ),
         ListTile(
           title: Text('刪除'),

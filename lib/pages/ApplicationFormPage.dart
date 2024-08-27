@@ -6,8 +6,6 @@ import '../components/MultiSelectWidget.dart';
 import '../components/MultiSelectWidget2.dart';
 
 import 'package:sticky_headers/sticky_headers.dart';
-
-//import "../"
 import 'package:awesome_select/awesome_select.dart';
 import './../components/form/index.dart';
 import "../model/index.dart";
@@ -29,7 +27,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
     QuestionObj(title: "文字", fieldType: FieldType.text),
     // QuestionObj(title: "文字", fieldType: FieldType.text, fieldDirection: FieldDirection.horizontal),
     // QuestionObj(title: "多行文字", fieldType: FieldType.textarea),
-    // //QuestionObj(title: "簽名", fieldType: FieldType.signture),
+    QuestionObj(title: "簽名", fieldType: FieldType.signture),
     // QuestionObj(title: "單選按鈕", fieldType: FieldType.radio, options: [
     //   OptionObj(label: "選項1", value: "1"),
     //   OptionObj(label: "選項2", value: "2"),

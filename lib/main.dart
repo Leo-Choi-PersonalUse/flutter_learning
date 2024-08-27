@@ -12,7 +12,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final appState = AppState(); // Initialize AppState
+  final appState = AppState(); // Initialize
+  await appState.initializePersistedState();
   await AppTheme.initialize();
 
   PackageInfo packageInfo = await PackageInfo.fromPlatform();

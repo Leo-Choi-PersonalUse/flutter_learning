@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:dotted_border/dotted_border.dart';
+import "package:flutter/material.dart";
+import "package:dotted_border/dotted_border.dart";
 import "../../model/index.dart";
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import "../modal/signature_modal.dart";
+import 'dart:convert';
 
 class SignatureWidget extends StatefulWidget {
   QuestionObj questionObj;
@@ -17,7 +20,10 @@ class _SignatureWidgetState extends State<SignatureWidget> {
   late bool isVisible;
   late bool isReadOnly;
   late FieldDirection fieldDirection = FieldDirection.vertical;
-  Image? signatureImage;
+
+  PhotoObj? signatureImage;
+
+  //Image? signatureImage;
 
   @override
   void initState() {
@@ -31,47 +37,117 @@ class _SignatureWidgetState extends State<SignatureWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: DottedBorder(
-        dashPattern: [6, 6, 6, 6],
-        borderType: BorderType.RRect,
-        //color: field.errorText != null ? Colors.red : Color(0xFFBBBBBB),
-        radius: Radius.circular(12),
-        padding: EdgeInsets.all(6),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          child: Container(
-            height: 117,
-            width: MediaQuery.of(context).size.width - 100,
-            // decoration: BoxDecoration(
-            //     border: Border.all(color: Color(0xFFBBBBBB)),
-            //
-            //     ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/icon_signature.png',
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                    title,
-                    style: TextStyle(color: Color(0xFFBBBBBB), fontSize: fontSize),
+    if (signatureImage != null) {
+      return Stack(
+        alignment: Alignment.topRight,
+        children: [
+          GestureDetector(
+            onTap: () {
+              if (isReadOnly == true) return;
+              //if (signatureImage != null) _showDigitalSignatureDialog("task.signature".tr());
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
                   ),
-                )
-              ],
+                  Container(
+                    height: 110,
+                    width: MediaQuery.of(context).size.width - 100,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                      image: DecorationImage(
+                        fit: BoxFit.scaleDown,
+                        //image: signatureImage!.image,
+                        image: MemoryImage(base64Decode(signatureImage!.base64!)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            //img_add_photo
+          ),
+          Visibility(
+            visible: isReadOnly == false,
+            child: Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.black,
+              ),
+              child: IconButton(
+                  iconSize: 18.0,
+                  padding: EdgeInsets.all(2.0),
+                  constraints: BoxConstraints(),
+                  onPressed: () {
+                    signatureImage = null;
+                    setState(() {});
+                  },
+                  icon: const Icon(
+                    Icons.close_rounded,
+                    color: Colors.white,
+                  )),
+            ),
+          )
+        ],
+      );
+    } else
+      return GestureDetector(
+        child: DottedBorder(
+          dashPattern: [6, 6, 6, 6],
+          borderType: BorderType.RRect,
+          //color: field.errorText != null ? Colors.red : Color(0xFFBBBBBB),
+          radius: Radius.circular(12),
+          padding: EdgeInsets.all(6),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+            child: Container(
+              height: 117,
+              width: MediaQuery.of(context).size.width - 100,
+              // decoration: BoxDecoration(
+              //     border: Border.all(color: Color(0xFFBBBBBB)),
+              //
+              //     ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Image.asset(
+                  //   'assets/images/icon_signature.png',
+                  // ),
+                  Icon(
+                    Icons.brush,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      title,
+                      style: TextStyle(color: Color(0xFFBBBBBB), fontSize: fontSize),
+                    ),
+                  )
+                ],
+              ),
+              //img_add_photo
+            ),
           ),
         ),
-      ),
-      onTap: () {
-        if (isReadOnly == true) return;
-        FocusScope.of(context).requestFocus(new FocusNode());
-        //_showDigitalSignatureDialog("task.signature".tr());
-      },
-    );
+        onTap: () async {
+          if (isReadOnly == true) return;
+          var res = await showCupertinoModalBottomSheet(
+            context: context,
+            builder: (context) => SignatureModal(),
+          );
+
+          if (res != null) {
+            setState(() {
+              signatureImage = PhotoObj(base64: res);
+            });
+          }
+
+          //FocusScope.of(context).requestFocus(new FocusNode());
+          //_showDigitalSignatureDialog("task.signature".tr());
+        },
+      );
   }
 }
