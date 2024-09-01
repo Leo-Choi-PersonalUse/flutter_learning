@@ -4,6 +4,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import './ApplicationFormPage.dart';
 import './AppFormBuilder.dart';
+import '/theme/AppTheme.dart';
+import '../components/dialog/confirm_dialog.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({Key? key, required this.title}) : super(key: key);
@@ -36,6 +38,10 @@ class _MenuPageState extends State<MenuPage> {
     },
     {
       "name": "Modal",
+      "content": AppFormBuilder(),
+    },
+    {
+      "name": "Dialog",
       "content": AppFormBuilder(),
     }
   ];
@@ -109,6 +115,28 @@ class _MenuPageState extends State<MenuPage> {
   void navigateToNewPage(index) {
     if(items[index]["name"] == "Modal")
       showBottomSheet();
+    if(items[index]["name"] == "Dialog"){
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+
+          return ConfirmDialog();
+
+          return AlertDialog(
+            title: Text("Dialog"),
+            content: Text("This is a dialog"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Close"),
+              )
+            ],
+          );
+        }
+      );
+    }
     else
       Navigator.push(
         context,
@@ -124,7 +152,7 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: AppTheme.of(context).appBar,
           title: Text(widget.title),
         ),
         body: ListView.separated(

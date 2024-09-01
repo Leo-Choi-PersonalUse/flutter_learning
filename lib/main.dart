@@ -8,13 +8,13 @@ import 'appState.dart';
 import "theme_model.dart";
 import 'theme/AppTheme.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
+import './theme/app_theme_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appState = AppState(); // Initialize
   await appState.initializePersistedState();
-  await AppTheme.initialize();
+  //await AppTheme.initialize();
 
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   print(packageInfo.appName);
@@ -41,15 +41,12 @@ class _AppState extends State<App> {
   //AppState appState = AppState.instance;
   ThemeMode _themeMode = AppTheme.themeMode;
 
-  void setThemeMode(ThemeMode mode) => setState(() {
-        _themeMode = mode;
-        AppTheme.saveThemeMode(mode);
-      });
-
   void setThemeMode_invert() => setState(() {
         _themeMode = (_themeMode == ThemeMode.dark) ? ThemeMode.light : ThemeMode.dark;
-        print(_themeMode);
-        AppTheme.saveThemeMode(_themeMode);
+        AppState().update(() {
+          AppState().isDarkMode = !AppState().isDarkMode;
+        });
+        //AppTheme.saveThemeMode(_themeMode);
       });
 
   @override
@@ -57,15 +54,8 @@ class _AppState extends State<App> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      //theme: appState.isDarkTheme ? ThemeData.dark() : ThemeData.light(),
-      theme: ThemeData(
-        brightness: Brightness.light,
-        scrollbarTheme: ScrollbarThemeData(),
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        scrollbarTheme: ScrollbarThemeData(),
-      ),
+      theme: AppThemeData.lightTheme,
+      darkTheme: AppThemeData.darkTheme,
       themeMode: _themeMode,
       home: const HomePage(),
     );

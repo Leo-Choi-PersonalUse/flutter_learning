@@ -134,7 +134,12 @@ class _SignatureWidgetState extends State<SignatureWidget> {
         ),
         onTap: () async {
           if (isReadOnly == true) return;
-          var res = await showCupertinoModalBottomSheet(
+          // var res = await showCupertinoModalBottomSheet(
+          //   context: context,
+          //   builder: (context) => SignatureModal(),
+          // );
+
+          var res = await showDialog(
             context: context,
             builder: (context) => SignatureModal(),
           );

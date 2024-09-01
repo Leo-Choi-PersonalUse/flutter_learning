@@ -6,8 +6,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import '../modal/photo_modal.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../photo_viewer.dart';
+import '../modal/modal_template.dart';
 
 class PhotoWidget extends StatefulWidget {
   QuestionObj questionObj;
@@ -71,19 +71,21 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                     child: addPhotoWidget(),
                   ),
                   onTap: () async {
-                    var res = await showBarModalBottomSheet(
+                    // showModalBottomSheet(
+                    //   context: context,
+                    //   builder: (context) => PhotoModal(),
+                    // );
+
+                    showModalBottomSheet(
                       context: context,
-                      animationCurve: Curves.easeInOut,
-                      duration: Duration(milliseconds: 300),
-                      closeProgressThreshold: 0.0,
-                      backgroundColor: Colors.transparent.withOpacity(1),
-                      builder: (context) => PhotoModal(),
-                      barrierColor: Colors.transparent.withOpacity(0.4),
+                      builder: (context) => ModalTemplate(
+                        content: Text("aa"),
+                      ),
                     );
 
-                    res.forEach((element) {
-                      addPhotoToList(photo: element);
-                    });
+                    // res.forEach((element) {
+                    //   addPhotoToList(photo: element);
+                    // });
                   },
                 ),
                 Expanded(
@@ -99,7 +101,10 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PhotoViewer(photoList: photoList,initialIndex: index,),
+                              builder: (context) => PhotoViewer(
+                                photoList: photoList,
+                                initialIndex: index,
+                              ),
                             ),
                           );
                         },
