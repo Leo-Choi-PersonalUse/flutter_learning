@@ -6,7 +6,9 @@ import 'dart:typed_data';
 import 'modal_template.dart';
 
 class PhotoModal extends StatefulWidget {
-  const PhotoModal({super.key});
+  double? height;
+
+  PhotoModal({super.key, this.height});
 
   @override
   State<PhotoModal> createState() => _PhotoModalState();
@@ -16,6 +18,7 @@ class _PhotoModalState extends State<PhotoModal> {
   @override
   Widget build(BuildContext context) {
     return ModalTemplate(
+      height: widget.height,
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -49,84 +52,7 @@ class _PhotoModalState extends State<PhotoModal> {
             ),
             Flexible(
               child: ListTile(
-                title: Text('取消1'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消2'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消3'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消4'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消1'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消2'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消3'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消4'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消1'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消2'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消3'),
-                leading: Icon(Icons.cancel),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-            ),
-            Flexible(
-              child: ListTile(
-                title: Text('取消4'),
+                title: Text('取消'),
                 leading: Icon(Icons.cancel),
                 onTap: () => Navigator.of(context).pop(),
               ),

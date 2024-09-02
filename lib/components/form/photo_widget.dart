@@ -71,15 +71,11 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                     child: addPhotoWidget(),
                   ),
                   onTap: () async {
-                    // showModalBottomSheet(
-                    //   context: context,
-                    //   builder: (context) => PhotoModal(),
-                    // );
-
                     showModalBottomSheet(
+                      isScrollControlled: true,
                       context: context,
-                      builder: (context) => ModalTemplate(
-                        content: Text("aa"),
+                      builder: (context) => PhotoModal(
+                        height: 0.35,
                       ),
                     );
 
