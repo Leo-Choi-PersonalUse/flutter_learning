@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import "../../model/index.dart";
+import 'package:flutter_learning/theme/AppTheme.dart';
+import 'package:flutter_learning/components/form/errorTextWidget.dart';
 
 class CheckboxWidget extends StatefulWidget {
   QuestionObj questionObj;
@@ -38,6 +40,13 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
 
   @override
   Widget build(BuildContext context) {
+    return Visibility(
+      visible: isVisible,
+      child: checkboxWidget(),
+    );
+  }
+
+  Widget checkboxWidget() {
     List<Widget> rendering = [];
     int rows = (options.length / rowItems).ceil();
     for (int i = 0; i < rows; i++) {
@@ -48,10 +57,27 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
       rendering.add(oneRow(rowItems, temp));
     }
 
-    return fieldDirection == FieldDirection.vertical ? CheckboxWidget_Vertical(rendering: rendering) : CheckboxWidget_Horizontal(rendering: rendering);
+    return FormField(
+      validator: (value) {
+        var temp = selectedOptions.entries.where((element) => element.value == true);
+        if (temp.isEmpty) {
+          return 'Please select an option';
+        }
+        return null;
+      },
+      builder: (FormFieldState state) {
+        return Column(
+          children: [
+            fieldDirection == FieldDirection.vertical
+                ? CheckboxWidget_Vertical(rendering: rendering, state: state)
+                : CheckboxWidget_Horizontal(rendering: rendering, state: state),
+          ],
+        );
+      },
+    );
   }
 
-  Widget CheckboxWidget_Vertical({required List<Widget> rendering}) {
+  Widget CheckboxWidget_Vertical({required List<Widget> rendering, required FormFieldState state}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -61,20 +87,43 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
         ),
         SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
         Column(
-          children: rendering,
+          children: [
+            Container(
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: state.hasError != null && state.hasError ? AppTheme.of(context).error : Colors.transparent,
+                        width: 1,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        ...rendering,
+                      ],
+                    ),
+                  ),
+                  if (state.hasError != null && state.hasError) ErrorTextWidget(state: state),
+                  // ...rendering
+                ],
+              ),
+            )
+          ],
         ),
       ],
     );
   }
 
-  Widget CheckboxWidget_Horizontal({required List<Widget> rendering}) {
+  Widget CheckboxWidget_Horizontal({required List<Widget> rendering, required FormFieldState state}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
             flex: 1,
             child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
               child: Text(
                 title,
                 style: TextStyle(fontSize: fontSize),
@@ -83,7 +132,23 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
         Expanded(
           flex: 3,
           child: Column(
-            children: rendering,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: state.hasError != null && state.hasError ? AppTheme.of(context).error : Colors.transparent,
+                    width: 1,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    ...rendering,
+                  ],
+                ),
+              ),
+              if (state.hasError != null && state.hasError) ErrorTextWidget(state: state),
+            ],
           ),
         ),
       ],
@@ -97,16 +162,21 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Checkbox(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              value: selectedOptions[e.value],
-              onChanged: isReadOnly
-                  ? null
-                  : (bool? value) {
-                      setState(() {
-                        selectedOptions[e.value] = value!;
-                      });
-                    },
+            Container(
+              //limit the checkbox size
+              height: 35,
+              width: 35,
+              child: Checkbox(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                value: selectedOptions[e.value],
+                onChanged: isReadOnly
+                    ? null
+                    : (bool? value) {
+                        setState(() {
+                          selectedOptions[e.value] = value!;
+                        });
+                      },
+              ),
             ),
             GestureDetector(
               onTap: isReadOnly

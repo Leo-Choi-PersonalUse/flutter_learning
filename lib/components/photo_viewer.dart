@@ -37,7 +37,7 @@ class _PhotoViewerState extends State<PhotoViewer> {
         builder: (BuildContext context, int index) {
           return PhotoViewGalleryPageOptions(
             imageProvider: MemoryImage(base64Decode(widget.photoList[index].base64!)),
-            initialScale: PhotoViewComputedScale.contained * 0.8,
+            initialScale: PhotoViewComputedScale.contained ,
             //heroAttributes: PhotoViewHeroAttributes(tag: widget.photoList[index].),
             //heroAttributes: PhotoViewHeroAttributes(tag: galleryItems[index].id),
           );

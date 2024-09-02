@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "../../model/index.dart";
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter_learning/theme/AppTheme.dart';
 
 class SingleSelectionWidget extends StatefulWidget {
   QuestionObj questionObj;
@@ -36,11 +37,29 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
   Widget build(BuildContext context) {
     return Visibility(
       visible: isVisible,
-      child: fieldDirection == FieldDirection.vertical ? RadioWidget_Vertical() : RadioWidget_Horizontal(),
+      child: singleSelectinWidget(),
     );
   }
 
-  Widget RadioWidget_Vertical() {
+  Widget singleSelectinWidget() {
+    return FormField(
+      validator: (value) {
+        if (selectedOption.value != null && selectedOption.value!.isEmpty) {
+          return 'Please select an option';
+        }
+        return null;
+      },
+      builder: (FormFieldState state) {
+        return Column(
+          children: [
+            fieldDirection == FieldDirection.vertical ? SingleSelectionWidget_Vertical(state: state) : SingleSelectionWidget_Horizontal(state: state),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget SingleSelectionWidget_Vertical({required FormFieldState state}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,6 +69,23 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
         ),
         SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
         DropdownSearch<OptionObj>(
+          //dropdownDecoratorProps: const DropDownDecoratorProps(dropdownSearchDecoration: InputDecoration(border: InputBorder.none)),
+          dropdownDecoratorProps: DropDownDecoratorProps(
+              dropdownSearchDecoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: AppTheme.of(context).error),
+            ),
+          )),
+          // dropdownDecoratorProps: DropDownDecoratorProps(
+          //     dropdownSearchDecoration: state.hasError
+          //         ? InputDecoration(
+          //       border: OutlineInputBorder(
+          //         borderSide: BorderSide(color: AppTheme.of(context).error),
+          //       ),
+          //     )
+          //         : null),
+          //
+
           popupProps: PopupProps.menu(
             showSelectedItems: true,
           ),
@@ -70,7 +106,7 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
     );
   }
 
-  Widget RadioWidget_Horizontal() {
+  Widget SingleSelectionWidget_Horizontal({required FormFieldState state}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

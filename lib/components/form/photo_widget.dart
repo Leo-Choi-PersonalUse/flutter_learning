@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "../../model/index.dart";
 import 'package:dotted_border/dotted_border.dart';
 import 'package:image_picker/image_picker.dart';
+import "package:flutter_learning/theme/AppTheme.dart";
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -54,9 +55,9 @@ class _PhotoWidgetState extends State<PhotoWidget> {
   Widget photoWidget() {
     return FormField(
       validator: (value) {
-        //if (selectedOption.isEmpty) {
-        return 'Please select an option';
-        //}
+        if (photoList.isEmpty) {
+          return 'Please select a photo';
+        }
         return null;
       },
       builder: (FormFieldState state) {
@@ -68,10 +69,10 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                 GestureDetector(
                   child: Visibility(
                     visible: true, //isCanEdit,
-                    child: addPhotoWidget(),
+                    child: addPhotoWidget(state: state),
                   ),
                   onTap: () async {
-                    showModalBottomSheet(
+                    var res = await showModalBottomSheet(
                       isScrollControlled: true,
                       context: context,
                       builder: (context) => PhotoModal(
@@ -79,9 +80,11 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                       ),
                     );
 
-                    // res.forEach((element) {
-                    //   addPhotoToList(photo: element);
-                    // });
+                    if (res != null && res.length > 0) {
+                      res.forEach((element) {
+                        addPhotoToList(photo: element);
+                      });
+                    }
                   },
                 ),
                 Expanded(
@@ -132,20 +135,32 @@ class _PhotoWidgetState extends State<PhotoWidget> {
                 ),
               ],
             ),
+            if (state.errorText != null)
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(13, 10, 0, 0),
+                    child: Text(
+                      state.errorText.toString(),
+                      style: TextStyle(color: AppTheme.of(context).error, fontSize: 12),
+                    ),
+                  ),
+                ],
+              ),
           ],
         );
       },
     );
   }
 
-  Widget addPhotoWidget() {
+  Widget addPhotoWidget({required FormFieldState state}) {
     return Padding(
       padding: EdgeInsets.only(right: 10),
       child: DottedBorder(
         dashPattern: [6, 6, 6, 6],
         borderType: BorderType.RRect,
-        color: Color(0xFFBBBBBB),
-        //color: field.errorText != null ? Colors.red : Color(0xFFBBBBBB),
+        //color: Color(0xFFBBBBBB),
+        color: state.errorText != null ? AppTheme.of(context).error : Color(0xFFBBBBBB),
         radius: Radius.circular(12),
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(12)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_learning/theme/AppTheme.dart';
 import "../../model/index.dart";
 
 class RadioWidget extends StatefulWidget {
@@ -61,19 +62,16 @@ class _RadioWidgetState extends State<RadioWidget> {
       builder: (FormFieldState state) {
         return Column(
           children: [
-            fieldDirection == FieldDirection.vertical ? RadioWidget_Vertical(rendering: rendering) : RadioWidget_Horizontal(rendering: rendering),
-            if (state.hasError)
-              Text(
-                state.errorText!,
-                style: TextStyle(color: Colors.red),
-              ),
+            fieldDirection == FieldDirection.vertical
+                ? RadioWidget_Vertical(rendering: rendering, state: state)
+                : RadioWidget_Horizontal(rendering: rendering, state: state),
           ],
         );
       },
     );
   }
 
-  Widget RadioWidget_Vertical({required List<Widget> rendering}) {
+  Widget RadioWidget_Vertical({required List<Widget> rendering, required FormFieldState state}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -83,13 +81,27 @@ class _RadioWidgetState extends State<RadioWidget> {
         ),
         SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
         Column(
-          children: rendering,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(
+                  color: state.hasError != null && state.hasError ? AppTheme.of(context).error : Colors.transparent,
+                  width: 1,
+                ),
+              ),
+              child: Column(children: [
+                ...rendering,
+              ]),
+            ),
+            if (state.hasError != null && state.hasError) errorText(state),
+          ],
         ),
       ],
     );
   }
 
-  Widget RadioWidget_Horizontal({required List<Widget> rendering}) {
+  Widget RadioWidget_Horizontal({required List<Widget> rendering, required FormFieldState state}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -106,7 +118,21 @@ class _RadioWidgetState extends State<RadioWidget> {
         Expanded(
           flex: 3,
           child: Column(
-            children: rendering,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: state.hasError != null && state.hasError ? AppTheme.of(context).error : Colors.transparent,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(children: [
+                  ...rendering,
+                ]),
+              ),
+              if (state.hasError != null && state.hasError) errorText(state),
+            ],
           ),
         ),
       ],
@@ -188,6 +214,23 @@ class _RadioWidgetState extends State<RadioWidget> {
       child: Row(
         children: children,
       ),
+    );
+  }
+
+  Widget errorText(FormFieldState state) {
+    return Row(
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(13, 10, 0, 0),
+          child: Text(
+            state.errorText!,
+            style: TextStyle(
+              color: AppTheme.of(context).error,
+              fontSize: 12,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
