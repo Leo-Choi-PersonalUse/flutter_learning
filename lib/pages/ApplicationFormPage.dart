@@ -23,39 +23,39 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
   final _formKey = GlobalKey<FormState>();
 
   List<QuestionObj> question = [
-    // QuestionObj(title: "標目", fieldType: FieldType.heading),
+    QuestionObj(title: "標目", fieldType: FieldType.heading),
     QuestionObj(title: "文字", fieldType: FieldType.text),
     QuestionObj(title: "文字", fieldType: FieldType.text, fieldDirection: FieldDirection.horizontal),
-    // QuestionObj(title: "多行文字", fieldType: FieldType.textarea),
-    //QuestionObj(title: "簽名", fieldType: FieldType.signture),
-    // QuestionObj(title: "單選按鈕", fieldType: FieldType.radio, options: [
-    //   OptionObj(label: "選項1", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    // ]),
-    // QuestionObj(title: "單選按鈕", fieldType: FieldType.radio, fieldDirection: FieldDirection.horizontal, options: [
-    //   OptionObj(label: "選項1", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    // ]),
-    // QuestionObj(title: "多選按鈕", fieldType: FieldType.checkbox, options: [
-    //   OptionObj(label: "選項1", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    // ]),
-    // QuestionObj(title: "多選按鈕", fieldType: FieldType.checkbox, fieldDirection: FieldDirection.horizontal, options: [
-    //   OptionObj(label: "選項1", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    // ]),
+    QuestionObj(title: "多行文字", fieldType: FieldType.textarea),
+    QuestionObj(title: "簽名", fieldType: FieldType.signture),
+    QuestionObj(title: "單選按鈕", fieldType: FieldType.radio, options: [
+      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+    ]),
+    QuestionObj(title: "單選按鈕", fieldType: FieldType.radio, fieldDirection: FieldDirection.horizontal, options: [
+      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+    ]),
+    QuestionObj(title: "多選按鈕", fieldType: FieldType.checkbox, options: [
+      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+    ]),
+    QuestionObj(title: "多選按鈕", fieldType: FieldType.checkbox, fieldDirection: FieldDirection.horizontal, options: [
+      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+    ]),
     QuestionObj(title: "單項選擇", fieldType: FieldType.single_selection, fieldDirection: FieldDirection.horizontal, options: [
       OptionObj(label: "選項1", value: "1"),
       OptionObj(label: "選項2", value: "2"),
@@ -84,7 +84,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
       OptionObj(label: "選項4", value: "4"),
       OptionObj(label: "選項5", value: "5"),
     ]),
-    //QuestionObj(title: "標目", fieldType: FieldType.photo),
+    QuestionObj(title: "標目", fieldType: FieldType.photo),
   ];
 
   static List<dynamic> _animals = [
