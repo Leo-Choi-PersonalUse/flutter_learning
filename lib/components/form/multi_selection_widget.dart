@@ -105,12 +105,14 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          flex: 1,
-          child: Text(
-            title,
-            style: TextStyle(fontSize: fontSize),
-          ),
-        ),
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: state.hasError ? 22.0 : 0),
+              child: Text(
+                title,
+                style: TextStyle(fontSize: fontSize),
+              ),
+            )),
         Expanded(
           flex: 3,
           child: Column(
