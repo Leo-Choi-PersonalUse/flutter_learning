@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import "../../model/index.dart";
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter_learning/theme/AppTheme.dart';
+import 'package:flutter_learning/components/form/error_text_widget.dart';
 
 class MultiSelectionWidget extends StatefulWidget {
   QuestionObj questionObj;
@@ -19,7 +21,6 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
   late bool isVisible;
   late FieldDirection fieldDirection = FieldDirection.vertical;
 
-
   List<OptionObj> selectedOptions = [];
 
   @override
@@ -37,11 +38,29 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
   Widget build(BuildContext context) {
     return Visibility(
       visible: isVisible,
-      child: fieldDirection == FieldDirection.vertical ? RadioWidget_Vertical() : RadioWidget_Horizontal(),
+      child: multiSelectinWidget(),
     );
   }
 
-  Widget RadioWidget_Vertical() {
+  Widget multiSelectinWidget() {
+    return FormField(
+      validator: (value) {
+        if (selectedOptions.isEmpty) {
+          return 'Please select an option';
+        }
+        return null;
+      },
+      builder: (FormFieldState state) {
+        return Column(
+          children: [
+            fieldDirection == FieldDirection.vertical ? MultiSelectionWidget_Vertical(state: state) : MultiSelectionWidget_Horizontal(state: state),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget MultiSelectionWidget_Vertical({required FormFieldState state}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,38 +69,18 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
           style: TextStyle(fontSize: fontSize),
         ),
         SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
-        DropdownSearch<OptionObj>.multiSelection(
-          enabled: !isReadOnly,
-          items: options,
-          itemAsString: (OptionObj u) => u.label,
-          compareFn: (OptionObj obj1, OptionObj obj2) {
-            return obj1.value == obj2.value;
-          },
-          onChanged: (List<OptionObj> obj) {
-            setState(() {
-              selectedOptions = obj;
-            });
-          },
-          selectedItems: selectedOptions,
-        ),
-      ],
-    );
-  }
-
-  Widget RadioWidget_Horizontal() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          flex: 1,
-          child: Text(
-            title,
-            style: TextStyle(fontSize: fontSize),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: state.hasError ? AppTheme.of(context).error : Colors.grey),
+            borderRadius: BorderRadius.circular(12.0),
           ),
-        ),
-        Expanded(
-          flex: 3,
           child: DropdownSearch<OptionObj>.multiSelection(
+            dropdownDecoratorProps: const DropDownDecoratorProps(
+              dropdownSearchDecoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.fromLTRB(5, 5, 0, 5),
+              ),
+            ),
             enabled: !isReadOnly,
             items: options,
             itemAsString: (OptionObj u) => u.label,
@@ -94,6 +93,56 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
               });
             },
             selectedItems: selectedOptions,
+          ),
+        ),
+        if (state != null && state.hasError) ErrorTextWidget(state: state),
+      ],
+    );
+  }
+
+  Widget MultiSelectionWidget_Horizontal({required FormFieldState state}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          flex: 1,
+          child: Text(
+            title,
+            style: TextStyle(fontSize: fontSize),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: state.hasError ? AppTheme.of(context).error : Colors.grey),
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: DropdownSearch<OptionObj>.multiSelection(
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.fromLTRB(5, 5, 0, 5),
+                    ),
+                  ),
+                  enabled: !isReadOnly,
+                  items: options,
+                  itemAsString: (OptionObj u) => u.label,
+                  compareFn: (OptionObj obj1, OptionObj obj2) {
+                    return obj1.value == obj2.value;
+                  },
+                  onChanged: (List<OptionObj> obj) {
+                    setState(() {
+                      selectedOptions = obj;
+                    });
+                  },
+                  selectedItems: selectedOptions,
+                ),
+              ),
+              if (state != null && state.hasError) ErrorTextWidget(state: state),
+            ],
           ),
         ),
       ],

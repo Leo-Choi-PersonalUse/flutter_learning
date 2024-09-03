@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import "../../model/index.dart";
 import 'package:flutter_learning/theme/AppTheme.dart';
-import 'package:flutter_learning/components/form/errorTextWidget.dart';
+import 'package:flutter_learning/components/form/error_text_widget.dart';
 
 class CheckboxWidget extends StatefulWidget {
   QuestionObj questionObj;

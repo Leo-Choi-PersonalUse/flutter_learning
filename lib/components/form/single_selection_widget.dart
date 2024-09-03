@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import "../../model/index.dart";
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter_learning/theme/AppTheme.dart';
+import './error_text_widget.dart';
 
 class SingleSelectionWidget extends StatefulWidget {
   QuestionObj questionObj;
@@ -67,59 +68,15 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
           title,
           style: TextStyle(fontSize: fontSize),
         ),
-        SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
-        DropdownSearch<OptionObj>(
-          //dropdownDecoratorProps: const DropDownDecoratorProps(dropdownSearchDecoration: InputDecoration(border: InputBorder.none)),
-          dropdownDecoratorProps: DropDownDecoratorProps(
-              dropdownSearchDecoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.of(context).error),
-            ),
-          )),
-          // dropdownDecoratorProps: DropDownDecoratorProps(
-          //     dropdownSearchDecoration: state.hasError
-          //         ? InputDecoration(
-          //       border: OutlineInputBorder(
-          //         borderSide: BorderSide(color: AppTheme.of(context).error),
-          //       ),
-          //     )
-          //         : null),
-          //
-
-          popupProps: PopupProps.menu(
-            showSelectedItems: true,
+        SizedBox(height: 8.0),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: state.hasError ? AppTheme.of(context).error : Colors.grey),
+            borderRadius: BorderRadius.circular(12.0),
           ),
-          enabled: !isReadOnly,
-          items: options,
-          itemAsString: (OptionObj u) => u.label,
-          compareFn: (OptionObj obj1, OptionObj obj2) {
-            return obj1.value == obj2.value;
-          },
-          onChanged: (OptionObj? obj) {
-            setState(() {
-              selectedOption = obj!;
-            });
-          },
-          //selectedItem: selectedOption,
-        ),
-      ],
-    );
-  }
-
-  Widget SingleSelectionWidget_Horizontal({required FormFieldState state}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          flex: 1,
-          child: Text(
-            title,
-            style: TextStyle(fontSize: fontSize),
-          ),
-        ),
-        Expanded(
-          flex: 3,
           child: DropdownSearch<OptionObj>(
+            dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12))),
             popupProps: PopupProps.menu(
               showSelectedItems: true,
             ),
@@ -136,6 +93,57 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
             },
             //selectedItem: selectedOption,
           ),
+        ),
+        if (state.hasError) ErrorTextWidget(state: state) // Add some spacing between the title and the TextFormField
+      ],
+    );
+  }
+
+  Widget SingleSelectionWidget_Horizontal({required FormFieldState state}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: state.hasError ? 22.0 : 0),
+              child: Text(
+                title,
+                style: TextStyle(fontSize: fontSize),
+              ),
+            )),
+        Expanded(
+          flex: 3,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: state.hasError ? AppTheme.of(context).error : Colors.grey),
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: DropdownSearch<OptionObj>(
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12))),
+                  popupProps: PopupProps.menu(
+                    showSelectedItems: true,
+                  ),
+                  enabled: !isReadOnly,
+                  items: options,
+                  itemAsString: (OptionObj u) => u.label,
+                  compareFn: (OptionObj obj1, OptionObj obj2) {
+                    return obj1.value == obj2.value;
+                  },
+                  onChanged: (OptionObj? obj) {
+                    setState(() {
+                      selectedOption = obj!;
+                    });
+                  },
+                  //selectedItem: selectedOption,
+                ),
+              ),
+              if (state.hasError) ErrorTextWidget(state: state) // Add some spacing between the title and the TextFormField
+            ],
+          ), //
         ),
       ],
     );
