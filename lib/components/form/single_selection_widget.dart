@@ -17,7 +17,10 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
   late List<OptionObj> options = [];
   late bool isReadOnly;
   late String title;
-  late double fontSize;
+  late double titleFontSize;
+  late bool titleBold;
+  late double answerFontSize;
+  late bool answerBold;
   late bool isVisible;
   late FieldDirection fieldDirection = FieldDirection.vertical;
 
@@ -27,7 +30,10 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
   void initState() {
     super.initState();
     title = widget.questionObj.title;
-    fontSize = widget.questionObj.answer_fontSize;
+    titleFontSize = widget.questionObj.titleFontSize;
+    titleBold = widget.questionObj.titleBold;
+    answerFontSize = widget.questionObj.answerFontSize;
+    answerBold = widget.questionObj.answerBold;
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
     fieldDirection = widget.questionObj.fieldDirection;
@@ -66,7 +72,7 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: fontSize),
+          style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
         ),
         SizedBox(height: 8.0),
         Container(
@@ -109,7 +115,7 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
               padding: EdgeInsets.only(bottom: state.hasError ? 22.0 : 0),
               child: Text(
                 title,
-                style: TextStyle(fontSize: fontSize),
+                style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
               ),
             )),
         Expanded(
@@ -126,6 +132,14 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
                       dropdownSearchDecoration: InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12))),
                   popupProps: PopupProps.menu(
                     showSelectedItems: true,
+                    itemBuilder: (context, item, isSelected) {
+                      return ListTile(
+                        title: Text(
+                          item.label,
+                          style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
+                        ),
+                      );
+                    },
                   ),
                   enabled: !isReadOnly,
                   items: options,
@@ -138,7 +152,11 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
                       selectedOption = obj!;
                     });
                   },
-                  //selectedItem: selectedOption,
+                  //selectedItem
+                  dropdownBuilder: (context, dynamic? selectedItem) {
+                    return Text(selectedOption.label ?? "",
+                        style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal));
+                  },
                 ),
               ),
               if (state.hasError) ErrorTextWidget(state: state) // Add some spacing between the title and the TextFormField

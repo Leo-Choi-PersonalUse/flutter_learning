@@ -19,19 +19,33 @@ class _HeadingState extends State<HeadingWidget> {
   void initState() {
     super.initState();
     title = widget.questionObj.title;
-    fontSize = widget.questionObj.answer_fontSize;
+    fontSize = widget.questionObj.answerFontSize;
     isVisible = widget.questionObj.isVisible;
+  }
+
+  Alignment getAlignment() {
+    switch (widget.questionObj.titleAlignment) {
+      case TextAlignment.left:
+        return Alignment.centerLeft;
+      case TextAlignment.right:
+        return Alignment.centerRight;
+      default:
+        return Alignment.center;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Visibility(
       visible: isVisible,
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: fontSize,
-          fontWeight: FontWeight.bold,
+      child: Align(
+        alignment: getAlignment(),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: widget.questionObj.titleBold ? FontWeight.bold : FontWeight.normal,
+          ),
         ),
       ),
     );

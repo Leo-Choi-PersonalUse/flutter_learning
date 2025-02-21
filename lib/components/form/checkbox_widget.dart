@@ -26,7 +26,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
   void initState() {
     super.initState();
     title = widget.questionObj.title;
-    fontSize = widget.questionObj.answer_fontSize;
+    fontSize = widget.questionObj.answerFontSize;
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
     fieldDirection = widget.questionObj.fieldDirection;

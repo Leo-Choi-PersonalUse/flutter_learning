@@ -5,7 +5,9 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import './ApplicationFormPage.dart';
 import './AppFormBuilder.dart';
 import '/theme/AppTheme.dart';
+import './page_index.dart';
 import '../components/dialog/confirm_dialog.dart';
+
 
 class MenuPage extends StatefulWidget {
   const MenuPage({Key? key, required this.title}) : super(key: key);
@@ -38,19 +40,23 @@ class _MenuPageState extends State<MenuPage> {
     },
     {
       "name": "Modal",
-      "content": AppFormBuilder(),
+      "content": ModalPage(),
     },
     {
       "name": "Dialog",
       "content": AppFormBuilder(),
+    },
+    {
+      "name": "Prop",
+      "content": PropTestPage(),
     }
   ];
 
   double itemGap = 5.0;
+  double hPadding = 30.0;
+  double vPadding = 10.0;
 
-
-
-  void showBottomSheet(){
+  void showBottomSheet() {
     showMaterialModalBottomSheet(
       context: context,
       builder: (context) => Column(
@@ -111,69 +117,66 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
-
   void navigateToNewPage(index) {
-    if(items[index]["name"] == "Modal")
-      showBottomSheet();
-    if(items[index]["name"] == "Dialog"){
+    //if (items[index]["name"] == "Modal") showBottomSheet();
+    if (items[index]["name"] == "Dialog") {
       showDialog(
-        context: context,
-        builder: (BuildContext context) {
+          context: context,
+          builder: (BuildContext context) {
+            return ConfirmDialog();
 
-          return ConfirmDialog();
-
-          return AlertDialog(
-            title: Text("Dialog"),
-            content: Text("This is a dialog"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Close"),
-              )
-            ],
-          );
-        }
-      );
-    }
-    else
+            return AlertDialog(
+              title: Text("Dialog"),
+              content: Text("This is a dialog"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("Close"),
+                )
+              ],
+            );
+          });
+    } else
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-            // Replace Navigrate with the desired destination page
-            items[index]["content"]
-        ),
-    );
+            builder: (context) =>
+                // Replace Navigrate with the desired destination page
+                items[index]["content"]),
+      );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppTheme.of(context).appBar,
-          title: Text(widget.title),
-        ),
-        body: ListView.separated(
-          itemCount: items.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {
-                // Handle item tap here
+      appBar: AppBar(
+        backgroundColor: AppTheme.of(context).appBar,
+        title: Text(widget.title),
+      ),
+      body: ListView.separated(
+        itemCount: items.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: EdgeInsets.fromLTRB(hPadding, index == 0 ? vPadding * 2 : vPadding, hPadding, vPadding),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor: Colors.blue,
+                textStyle: TextStyle(fontSize: 25),
+              ),
+              onPressed: () {
                 navigateToNewPage(index);
               },
-              child: Container(
-                padding: EdgeInsets.all(5),
-                child: Center(
-                  child: Text(items[index]["name"]),
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(height: itemGap);
-          },
-        ));
+              child: Text(items[index]["name"]),
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return Container();
+        },
+      ),
+    );
   }
 }

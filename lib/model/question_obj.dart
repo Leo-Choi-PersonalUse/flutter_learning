@@ -4,20 +4,30 @@ class QuestionObj {
   bool isVisible;
   bool isReadOnly = false;
 
+  // Question
   String title;
-  double title_fontSize;
+  double titleFontSize;
+  TextAlignment titleAlignment;
+  bool titleBold;
+
+  //Answer
+  double answerFontSize;
+  bool answerBold;
+
   FieldType fieldType;
   FieldDirection fieldDirection;
-  double answer_fontSize;
   List<OptionObj> options;
 
   QuestionObj(
       {this.isVisible = true,
       this.isReadOnly = false,
       required this.title,
-      this.title_fontSize = 20,
+      this.titleFontSize = 20,
+      this.titleAlignment = TextAlignment.left,
+      this.titleBold = false,
       required this.fieldType,
-      this.answer_fontSize = 20,
+      this.answerFontSize = 20,
+      this.answerBold = false,
       this.fieldDirection = FieldDirection.vertical,
       this.options = const []});
 }
@@ -25,6 +35,12 @@ class QuestionObj {
 enum FieldDirection {
   vertical,
   horizontal,
+}
+
+enum TextAlignment {
+  left,
+  right,
+  center,
 }
 
 enum FieldType {

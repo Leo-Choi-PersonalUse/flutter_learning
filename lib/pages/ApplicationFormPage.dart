@@ -19,6 +19,10 @@ class ApplicationFormPage extends StatefulWidget {
 }
 
 class _ApplicationFormPageState extends State<ApplicationFormPage> {
+
+  //For scroll to dismiss keyboard
+  final FocusNode _focusNode = FocusNode();
+
   @override
   final _formKey = GlobalKey<FormState>();
 
@@ -125,90 +129,40 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
         backgroundColor: Color(0xFFFFD754),
         title: Text("Application Form"),
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                    child: Column(
-                  children: question
-                      .map((q) => Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20), // each item padding
-                            child: FormManager(questionObj: q).getWidget(),
-                          ))
-                      .toList(),
-                )),
-              ),
-              SizedBox(height: 20.0), // Space between ListView and button
-              ElevatedButton(
-                onPressed: () {
-                  // Add your button press logic here
-                  _formKey.currentState!.validate();
-                },
-                child: Text("Submit"),
-              ),
-            ],
+      body: GestureDetector(
+        onPanDown: (_) {
+          FocusScope.of(context).requestFocus(_focusNode);
+        },
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                      child: Column(
+                    children: question
+                        .map((q) => Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20), // each item padding
+                              child: FormManager(questionObj: q).getWidget(),
+                            ))
+                        .toList(),
+                  )),
+                ),
+                SizedBox(height: 20.0), // Space between ListView and button
+                ElevatedButton(
+                  onPressed: () {
+                    // Add your button press logic here
+                    _formKey.currentState!.validate();
+                  },
+                  child: Text("Submit"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-
-// Widget build2(BuildContext context) {
-//   return Scaffold(
-//     appBar: AppBar(
-//       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-//       title: Text("Application Form"),
-//     ),
-//     body: Form(
-//       child: Padding(
-//         padding: EdgeInsets.all(20.0),
-//         child: Column(
-//           children: [
-//             HeadingWidget(title: "Application Form"),
-//             TextWidget(title: "hello"),
-//             TextareaWidget(title: "hello"),
-//
-//             MultiSelectWidget(
-//               options: _animals,
-//               selectedOptions: _selectedAnimals5,
-//             ),
-//             SizedBox(height: 20.0), // Add some spacing between the widgets
-//             MultiSelectWidget2(
-//               options: _animals.map((animal) => animal.name).toList().cast<String>(),
-//               selectedOptions: _selectedAnimals5.map((animal) => animal.name).toList().cast<String>(),
-//             ),
-//             SmartSelect<String>.single(
-//               title: 'Frameworks',
-//               selectedValue: value,
-//               choiceItems: options,
-//               onChange: (state) => setState(() => value = state.value),
-//               modalHeaderStyle: S2ModalHeaderStyle(
-//                 backgroundColor: Colors.blue,
-//                 textStyle: TextStyle(color: Colors.white),
-//                 iconTheme: IconThemeData(color: Colors.white),
-//               ),
-//               choiceStyle: S2ChoiceStyle(
-//                 titleStyle: TextStyle(fontSize: 16),
-//                 subtitleStyle: TextStyle(fontSize: 12),
-//               ),
-//               tileBuilder: (context, state) {
-//                 return S2Tile.fromState(
-//                   state,
-//                   isTwoLine: true,
-//                   leading: CircleAvatar(
-//                     backgroundImage: NetworkImage('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'),
-//                   ),
-//                 );
-//               },
-//             )
-//           ],
-//         ),
-//       ),
-//     ),
-//   );
-// }
 }

@@ -13,7 +13,10 @@ class TextWidget extends StatefulWidget {
 
 class _TextWidgetState extends State<TextWidget> {
   late String title;
-  late double fontSize;
+  late double titleFontSize;
+  late bool titleBold;
+  late double answerfontSize;
+  late bool answerBold;
   late bool isVisible;
   late bool isReadOnly;
   late FieldDirection fieldDirection = FieldDirection.vertical;
@@ -24,7 +27,10 @@ class _TextWidgetState extends State<TextWidget> {
   void initState() {
     super.initState();
     title = widget.questionObj.title;
-    fontSize = widget.questionObj.answer_fontSize;
+    titleFontSize = widget.questionObj.titleFontSize;
+    titleBold = widget.questionObj.titleBold;
+    answerfontSize = widget.questionObj.answerFontSize;
+    answerBold = widget.questionObj.answerBold;
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
     fieldDirection = widget.questionObj.fieldDirection;
@@ -42,13 +48,24 @@ class _TextWidgetState extends State<TextWidget> {
     );
   }
 
+  CrossAxisAlignment getAlignment() {
+    switch (widget.questionObj.titleAlignment) {
+      case TextAlignment.left:
+        return CrossAxisAlignment.start;
+      case TextAlignment.right:
+        return CrossAxisAlignment.end;
+      default:
+        return CrossAxisAlignment.center;
+    }
+  }
+
   Widget TextWidget_Vertical() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: getAlignment(),
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: fontSize),
+          style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
         ),
         SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
         TextFormField(
@@ -58,6 +75,7 @@ class _TextWidgetState extends State<TextWidget> {
             }
             return null;
           },
+          style: TextStyle(fontSize: answerfontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
           enabled: !isReadOnly,
           controller: TextEditingController(text: value),
           decoration: InputDecoration(
@@ -78,7 +96,7 @@ class _TextWidgetState extends State<TextWidget> {
           flex: 1,
           child: Text(
             title,
-            style: TextStyle(fontSize: fontSize),
+            style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
           ),
         ),
         Expanded(
@@ -90,6 +108,7 @@ class _TextWidgetState extends State<TextWidget> {
               }
               return null;
             },
+            style: TextStyle(fontSize: answerfontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
             enabled: !isReadOnly,
             controller: TextEditingController(text: value),
             decoration: InputDecoration(

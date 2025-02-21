@@ -13,7 +13,10 @@ class TextareaWidget extends StatefulWidget {
 
 class _TextareaWidgetWidgetState extends State<TextareaWidget> {
   late String title;
-  late double fontSize;
+  late double titleFontSize;
+  late bool titleBold;
+  late double answerFontSize;
+  late bool answerBold;
   late bool isVisible;
   late bool isReadOnly;
   late FieldDirection fieldDirection = FieldDirection.vertical;
@@ -24,13 +27,27 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
   void initState() {
     super.initState();
     title = widget.questionObj.title;
-    fontSize = widget.questionObj.answer_fontSize;
+    titleFontSize = widget.questionObj.titleFontSize;
+    titleBold = widget.questionObj.titleBold;
+    answerFontSize = widget.questionObj.answerFontSize;
+    answerBold = widget.questionObj.answerBold;
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
   }
 
   String getValue() {
     return value;
+  }
+
+  CrossAxisAlignment getAlignment() {
+    switch (widget.questionObj.titleAlignment) {
+      case TextAlignment.left:
+        return CrossAxisAlignment.start;
+      case TextAlignment.right:
+        return CrossAxisAlignment.end;
+      default:
+        return CrossAxisAlignment.center;
+    }
   }
 
   @override
@@ -40,11 +57,11 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
 
   Widget TextareaWidget_Vertical() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: getAlignment(),
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: fontSize),
+          style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
         ),
         SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
         TextFormField(
@@ -57,6 +74,7 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
           minLines: 5,
           maxLines: null,
           enabled: !isReadOnly,
+          style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
           controller: TextEditingController(text: value),
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -71,13 +89,13 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
 
   Widget TextareaWidget_Horizontal() {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: getAlignment(),
       children: [
         Expanded(
           flex: 1,
           child: Text(
             title,
-            style: TextStyle(fontSize: fontSize),
+            style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
           ),
         ),
         Expanded(
@@ -90,6 +108,7 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
               return null;
             },
             enabled: !isReadOnly,
+            style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
             controller: TextEditingController(text: value),
             decoration: InputDecoration(
               border: OutlineInputBorder(
