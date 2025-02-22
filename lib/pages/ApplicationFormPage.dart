@@ -47,7 +47,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
       OptionObj(label: "選項5", value: "5"),
     ]),
     QuestionObj(title: "多選按鈕", fieldType: FieldType.checkbox, options: [
-      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項123456789", value: "1"),
       OptionObj(label: "選項2", value: "2"),
       OptionObj(label: "選項3", value: "3"),
       OptionObj(label: "選項4", value: "4"),

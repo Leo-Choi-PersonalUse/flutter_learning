@@ -40,6 +40,17 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
     options = widget.questionObj.options;
   }
 
+  CrossAxisAlignment getAlignment() {
+    switch (widget.questionObj.titleAlignment) {
+      case TextAlignment.left:
+        return CrossAxisAlignment.start;
+      case TextAlignment.right:
+        return CrossAxisAlignment.end;
+      default:
+        return CrossAxisAlignment.center;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -68,7 +79,7 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
 
   Widget SingleSelectionWidget_Vertical({required FormFieldState state}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: getAlignment(),
       children: [
         Text(
           title,
@@ -107,7 +118,7 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
 
   Widget SingleSelectionWidget_Horizontal({required FormFieldState state}) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: getAlignment(),
       children: [
         Expanded(
             flex: 1,

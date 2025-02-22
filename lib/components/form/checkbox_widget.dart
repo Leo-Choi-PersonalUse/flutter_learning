@@ -17,7 +17,8 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
   late int rowItems = 3; // Number of items in a row
   late bool isReadOnly;
   late String title;
-  late double fontSize;
+  late double titleFontSize;
+  late double answerFontSize;
   late bool isVisible;
   late FieldDirection fieldDirection = FieldDirection.vertical;
   late Map<String, bool> selectedOptions = {};
@@ -26,7 +27,8 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
   void initState() {
     super.initState();
     title = widget.questionObj.title;
-    fontSize = widget.questionObj.answerFontSize;
+    titleFontSize = widget.questionObj.titleFontSize;
+    answerFontSize = widget.questionObj.answerFontSize;
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
     fieldDirection = widget.questionObj.fieldDirection;
@@ -83,7 +85,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: fontSize),
+          style: TextStyle(fontSize: titleFontSize),
         ),
         SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
         Column(
@@ -126,7 +128,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
               padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
               child: Text(
                 title,
-                style: TextStyle(fontSize: fontSize),
+                style: TextStyle(fontSize: titleFontSize),
               ),
             )),
         Expanded(
@@ -189,7 +191,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
               child: Text(
                 e.label,
                 style: TextStyle(
-                  fontSize: fontSize,
+                  fontSize: answerFontSize,
                 ),
                 softWrap: true,
               ),
