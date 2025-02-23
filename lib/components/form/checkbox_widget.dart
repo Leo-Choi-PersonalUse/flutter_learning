@@ -18,7 +18,9 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
   late bool isReadOnly;
   late String title;
   late double titleFontSize;
+  late bool titleBold;
   late double answerFontSize;
+  late bool answerBold;
   late bool isVisible;
   late FieldDirection fieldDirection = FieldDirection.vertical;
   late Map<String, bool> selectedOptions = {};
@@ -28,7 +30,9 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
     super.initState();
     title = widget.questionObj.title;
     titleFontSize = widget.questionObj.titleFontSize;
+    titleBold = widget.questionObj.titleBold;
     answerFontSize = widget.questionObj.answerFontSize;
+    answerBold = widget.questionObj.answerBold;
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
     fieldDirection = widget.questionObj.fieldDirection;
@@ -85,7 +89,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: titleFontSize),
+          style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
         ),
         SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
         Column(
@@ -128,7 +132,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
               padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
               child: Text(
                 title,
-                style: TextStyle(fontSize: titleFontSize),
+                style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
               ),
             )),
         Expanded(
@@ -162,10 +166,11 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
       return Expanded(
         flex: 1,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start, // Align children at the top
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              //limit the checkbox size
+              // Limit the checkbox size
               height: 35,
               width: 35,
               child: Checkbox(
@@ -174,26 +179,33 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
                 onChanged: isReadOnly
                     ? null
                     : (bool? value) {
-                        setState(() {
-                          selectedOptions[e.value] = value!;
-                        });
-                      },
+                  setState(() {
+                    selectedOptions[e.value] = value!;
+                  });
+                },
               ),
             ),
-            GestureDetector(
-              onTap: isReadOnly
-                  ? null
-                  : () {
-                      setState(() {
-                        selectedOptions[e.value] = !selectedOptions[e.value]!;
-                      });
-                    },
-              child: Text(
-                e.label,
-                style: TextStyle(
-                  fontSize: answerFontSize,
+            Expanded(
+              child: GestureDetector(
+                onTap: isReadOnly
+                    ? null
+                    : () {
+                  setState(() {
+                    selectedOptions[e.value] = !selectedOptions[e.value]!;
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 0.0), // Add some space between checkbox and text
+                  child: Text(
+                    e.label,
+                    style: TextStyle(
+                      fontSize: answerFontSize,
+                      fontWeight: answerBold ? FontWeight.bold : FontWeight.normal,
+                    ),
+                    softWrap: true, // Ensures text wraps to the next line
+                    maxLines: null, // Allows unlimited lines for wrapping
+                  ),
                 ),
-                softWrap: true,
               ),
             ),
           ],
@@ -201,7 +213,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
       );
     }).toList();
 
-    // If the number of items is less than rowItems, add a dummy Radio widget
+    // If the number of items is less than rowItems, add a dummy Checkbox widget
     if (items.length < rowItems) {
       children.add(
         Expanded(
@@ -225,6 +237,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
 
     return IntrinsicHeight(
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start, // Ensure rows align properly
         children: children,
       ),
     );

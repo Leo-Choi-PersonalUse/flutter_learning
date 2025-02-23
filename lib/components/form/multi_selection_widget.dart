@@ -17,7 +17,10 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
   late List<OptionObj> options = [];
   late bool isReadOnly;
   late String title;
-  late double fontSize;
+  late double titlefontSize;
+  late bool titleBold;
+  late double answerFontSize;
+  late bool answerBold;
   late bool isVisible;
   late FieldDirection fieldDirection = FieldDirection.vertical;
 
@@ -27,7 +30,10 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
   void initState() {
     super.initState();
     title = widget.questionObj.title;
-    fontSize = widget.questionObj.answerFontSize;
+    titlefontSize = widget.questionObj.titleFontSize;
+    titleBold = widget.questionObj.titleBold;
+    answerFontSize = widget.questionObj.answerFontSize;
+    answerBold = widget.questionObj.answerBold;
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
     fieldDirection = widget.questionObj.fieldDirection;
@@ -41,6 +47,11 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
       child: multiSelectinWidget(),
     );
   }
+
+  // Widget SelectedItemBuilder(BuildContext context, dynamic? selectedItem) {
+  //   return Text(selectedOption.label ?? "",
+  //       style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal));
+  // }
 
   Widget multiSelectinWidget() {
     return FormField(
@@ -66,7 +77,7 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: fontSize),
+          style: TextStyle(fontSize: titlefontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
         ),
         SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
         Container(
@@ -81,6 +92,15 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
                 contentPadding: EdgeInsets.fromLTRB(5, 5, 0, 5),
               ),
             ),
+            popupProps: PopupPropsMultiSelection.menu(
+              showSelectedItems: true,
+              menuProps: MenuProps(
+                barrierColor: Colors.black.withOpacity(0.4),
+              ),
+              scrollbarProps: ScrollbarProps(
+                thumbVisibility: true,
+              ),
+            ),
             enabled: !isReadOnly,
             items: options,
             itemAsString: (OptionObj u) => u.label,
@@ -93,6 +113,10 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
               });
             },
             selectedItems: selectedOptions,
+            // dropdownBuilder: (context, dynamic? selectedItem) {
+            //   return SelectedItemBuilder();
+            // },
+
           ),
         ),
         if (state != null && state.hasError) ErrorTextWidget(state: state),
@@ -110,7 +134,7 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
               padding: EdgeInsets.only(bottom: state.hasError ? 22.0 : 0),
               child: Text(
                 title,
-                style: TextStyle(fontSize: fontSize),
+                style: TextStyle(fontSize: titlefontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
               ),
             )),
         Expanded(

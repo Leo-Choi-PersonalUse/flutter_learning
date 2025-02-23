@@ -16,7 +16,10 @@ class _RadioWidgetState extends State<RadioWidget> {
   late int rowItems = 3; // Number of items in a row
   late bool isReadOnly;
   late String title;
-  late double fontSize;
+  late double titleFontSize;
+  late bool titleBold;
+  late double answerFontSize;
+  late bool answerBold;
   late bool isVisible;
   late FieldDirection fieldDirection = FieldDirection.vertical;
 
@@ -26,7 +29,10 @@ class _RadioWidgetState extends State<RadioWidget> {
   void initState() {
     super.initState();
     title = widget.questionObj.title;
-    fontSize = widget.questionObj.answerFontSize;
+    titleFontSize = widget.questionObj.titleFontSize;
+    titleBold = widget.questionObj.titleBold;
+    answerFontSize = widget.questionObj.answerFontSize;
+    answerBold = widget.questionObj.answerBold;
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
     fieldDirection = widget.questionObj.fieldDirection;
@@ -77,7 +83,7 @@ class _RadioWidgetState extends State<RadioWidget> {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: fontSize),
+          style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
         ),
         SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
         Column(
@@ -111,7 +117,7 @@ class _RadioWidgetState extends State<RadioWidget> {
             padding: EdgeInsets.fromLTRB(0, 9, 0, 0),
             child: Text(
               title,
-              style: TextStyle(fontSize: fontSize),
+              style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
             ),
           ),
         ),
@@ -146,9 +152,11 @@ class _RadioWidgetState extends State<RadioWidget> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Flexible(
+            Container(
+              width: 35,
+              height: 35,
               child: Transform.scale(
-                scale: 1.1,
+                scale: 1.2,
                 child: Radio(
                   value: e.value as String,
                   groupValue: selectedOption,
@@ -162,20 +170,24 @@ class _RadioWidgetState extends State<RadioWidget> {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: isReadOnly
-                  ? null
-                  : () {
-                      setState(() {
-                        selectedOption = e.value;
-                      });
-                    },
-              child: Text(
-                e.label,
-                style: TextStyle(
-                  fontSize: fontSize,
+            Expanded(
+              child: GestureDetector(
+                onTap: isReadOnly
+                    ? null
+                    : () {
+                        setState(() {
+                          selectedOption = e.value;
+                        });
+                      },
+                child: Text(
+                  e.label,
+                  style: TextStyle(
+                    fontSize: answerFontSize,
+                    fontWeight: answerBold ? FontWeight.bold : FontWeight.normal,
+                  ),
+                  softWrap: true, // Ensures text wraps to the next line
+                  maxLines: null,
                 ),
-                softWrap: true,
               ),
             ),
           ],

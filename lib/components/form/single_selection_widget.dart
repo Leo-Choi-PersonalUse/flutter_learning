@@ -77,6 +77,20 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
     );
   }
 
+  Widget itemListBuilder(BuildContext context, OptionObj item, bool isSelected) {
+    return ListTile(
+      title: Text(
+        item.label,
+        style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
+      ),
+    );
+  }
+
+  Widget SelectedItemBuilder(BuildContext context, dynamic? selectedItem) {
+    return Text(selectedOption.label ?? "",
+        style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal));
+  }
+
   Widget SingleSelectionWidget_Vertical({required FormFieldState state}) {
     return Column(
       crossAxisAlignment: getAlignment(),
@@ -96,6 +110,9 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
                 dropdownSearchDecoration: InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12))),
             popupProps: PopupProps.menu(
               showSelectedItems: true,
+              itemBuilder: (context, item, isSelected) {
+                return itemListBuilder(context, item, isSelected);
+              },
             ),
             enabled: !isReadOnly,
             items: options,
@@ -108,14 +125,17 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
                 selectedOption = obj!;
               });
             },
-            //selectedItem: selectedOption,
+            //selectedItem
+            dropdownBuilder: (context, dynamic? selectedItem) {
+              return SelectedItemBuilder(context, selectedItem);
+            },
           ),
         ),
         if (state.hasError) ErrorTextWidget(state: state) // Add some spacing between the title and the TextFormField
       ],
     );
   }
-
+  
   Widget SingleSelectionWidget_Horizontal({required FormFieldState state}) {
     return Row(
       crossAxisAlignment: getAlignment(),
@@ -144,12 +164,7 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
                   popupProps: PopupProps.menu(
                     showSelectedItems: true,
                     itemBuilder: (context, item, isSelected) {
-                      return ListTile(
-                        title: Text(
-                          item.label,
-                          style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
-                        ),
-                      );
+                      return itemListBuilder(context, item, isSelected);
                     },
                   ),
                   enabled: !isReadOnly,
@@ -165,8 +180,7 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
                   },
                   //selectedItem
                   dropdownBuilder: (context, dynamic? selectedItem) {
-                    return Text(selectedOption.label ?? "",
-                        style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal));
+                    return SelectedItemBuilder(context, selectedItem);
                   },
                 ),
               ),
