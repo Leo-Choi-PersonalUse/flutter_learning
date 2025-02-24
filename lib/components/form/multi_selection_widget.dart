@@ -14,10 +14,12 @@ class MultiSelectionWidget extends StatefulWidget {
 }
 
 class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
+  final dropdownKey = GlobalKey<DropdownSearchState<dynamic>>();
+
   late List<OptionObj> options = [];
   late bool isReadOnly;
   late String title;
-  late double titlefontSize;
+  late double titleFontSize;
   late bool titleBold;
   late double answerFontSize;
   late bool answerBold;
@@ -30,7 +32,7 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
   void initState() {
     super.initState();
     title = widget.questionObj.title;
-    titlefontSize = widget.questionObj.titleFontSize;
+    titleFontSize = widget.questionObj.titleFontSize;
     titleBold = widget.questionObj.titleBold;
     answerFontSize = widget.questionObj.answerFontSize;
     answerBold = widget.questionObj.answerBold;
@@ -44,16 +46,11 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
   Widget build(BuildContext context) {
     return Visibility(
       visible: isVisible,
-      child: multiSelectinWidget(),
+      child: multiSelectionWidget(),
     );
   }
 
-  // Widget SelectedItemBuilder(BuildContext context, dynamic? selectedItem) {
-  //   return Text(selectedOption.label ?? "",
-  //       style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal));
-  // }
-
-  Widget multiSelectinWidget() {
+  Widget multiSelectionWidget() {
     return FormField(
       validator: (value) {
         if (selectedOptions.isEmpty) {
@@ -71,56 +68,149 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
     );
   }
 
+  Widget dropdwonSearchMultiSelectionWidget() {
+    return DropdownSearch<OptionObj>.multiSelection(
+      key: dropdownKey,
+      dropdownDecoratorProps: const DropDownDecoratorProps(
+        dropdownSearchDecoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.fromLTRB(5, 5, 0, 5),
+        ),
+      ),
+      popupProps: PopupPropsMultiSelection.dialog(
+        showSelectedItems: true,
+        scrollbarProps: ScrollbarProps(
+          thumbVisibility: true,
+        ),
+        searchDelay: Duration(milliseconds: 0),
+        showSearchBox: true,
+        searchFieldProps: TextFieldProps(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0), // Adjust vertical padding
+            constraints: BoxConstraints(maxHeight: 50.0), // Limit height
+          ),
+          style: TextStyle(fontSize: answerFontSize), // Set font size to 20
+        ),
+        itemBuilder: (context, item, isSelected) {
+          return ListTile(
+            title: Text(
+              item.label,
+              style: TextStyle(
+                fontSize: answerFontSize,
+                fontWeight: answerBold ? FontWeight.bold : FontWeight.normal,
+                color: Colors.black,
+              ),
+            ),
+            //trailing: isSelected ? Icon(Icons.check) : null,
+          );
+        },
+        validationWidgetBuilder: (ctx, selectedItems) {
+          return GestureDetector(
+            onTap: () {
+              dropdownKey.currentState?.popupOnValidate();
+            },
+            child: Container(
+              color: Colors.blue.shade400,
+              height: 56,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text("OK"),
+              ),
+            ),
+          );
+        },
+        dialogProps: DialogProps(
+          // Add this to customize the dialog shape
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.zero, // Set to zero for no rounding
+          ),
+          backgroundColor: Colors.white,
+        ),
+      ),
+      enabled: !isReadOnly,
+      items: options,
+      itemAsString: (OptionObj u) => u.label,
+      compareFn: (OptionObj obj1, OptionObj obj2) {
+        return obj1.value == obj2.value;
+      },
+      onChanged: (List<OptionObj> obj) {
+        setState(() {
+          selectedOptions = obj;
+        });
+      },
+      selectedItems: selectedOptions,
+      dropdownBuilder: (context, dynamic? selectedItem) {
+        return Wrap(
+          children: selectedOptions.map((e) => SelectedItemWidget(e)).toList(),
+        );
+      },
+    );
+  }
+
   Widget MultiSelectionWidget_Vertical({required FormFieldState state}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: titlefontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
+          style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
         ),
-        SizedBox(height: 8.0), // Add some spacing between the title and the TextFormField
+        SizedBox(height: 8.0),
         Container(
           decoration: BoxDecoration(
             border: Border.all(color: state.hasError ? AppTheme.of(context).error : Colors.grey),
             borderRadius: BorderRadius.circular(12.0),
           ),
-          child: DropdownSearch<OptionObj>.multiSelection(
-            dropdownDecoratorProps: const DropDownDecoratorProps(
-              dropdownSearchDecoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.fromLTRB(5, 5, 0, 5),
-              ),
-            ),
-            popupProps: PopupPropsMultiSelection.menu(
-              showSelectedItems: true,
-              menuProps: MenuProps(
-                barrierColor: Colors.black.withOpacity(0.4),
-              ),
-              scrollbarProps: ScrollbarProps(
-                thumbVisibility: true,
-              ),
-            ),
-            enabled: !isReadOnly,
-            items: options,
-            itemAsString: (OptionObj u) => u.label,
-            compareFn: (OptionObj obj1, OptionObj obj2) {
-              return obj1.value == obj2.value;
-            },
-            onChanged: (List<OptionObj> obj) {
-              setState(() {
-                selectedOptions = obj;
-              });
-            },
-            selectedItems: selectedOptions,
-            // dropdownBuilder: (context, dynamic? selectedItem) {
-            //   return SelectedItemBuilder();
-            // },
-
-          ),
+          child: dropdwonSearchMultiSelectionWidget(),
         ),
         if (state != null && state.hasError) ErrorTextWidget(state: state),
       ],
+    );
+  }
+
+  Widget SelectedItemWidget(dynamic item) {
+    return Container(
+      height: 32,
+      padding: EdgeInsets.only(left: 10, right: isReadOnly ? 10 : 0),
+      margin: EdgeInsets.symmetric(horizontal: 2, vertical: 1),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.blue.withOpacity(0.5),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Text(
+              item.label,
+              style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
+            ),
+          ),
+          Visibility(
+              visible: !isReadOnly,
+              child: Container(
+                width: 36,
+                child: MaterialButton(
+                  height: 20,
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(0),
+                  minWidth: 20,
+                  onPressed: () {
+                    setState(() {
+                      selectedOptions.remove(item);
+                      dropdownKey.currentState?.removeItem(item);
+                    });
+                  },
+                  child: Icon(
+                    Icons.close_outlined,
+                    size: 20,
+                  ),
+                ),
+              ))
+        ],
+      ),
     );
   }
 
@@ -134,7 +224,7 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
               padding: EdgeInsets.only(bottom: state.hasError ? 22.0 : 0),
               child: Text(
                 title,
-                style: TextStyle(fontSize: titlefontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
+                style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
               ),
             )),
         Expanded(
@@ -146,26 +236,7 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
                   border: Border.all(color: state.hasError ? AppTheme.of(context).error : Colors.grey),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: DropdownSearch<OptionObj>.multiSelection(
-                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                    dropdownSearchDecoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.fromLTRB(5, 5, 0, 5),
-                    ),
-                  ),
-                  enabled: !isReadOnly,
-                  items: options,
-                  itemAsString: (OptionObj u) => u.label,
-                  compareFn: (OptionObj obj1, OptionObj obj2) {
-                    return obj1.value == obj2.value;
-                  },
-                  onChanged: (List<OptionObj> obj) {
-                    setState(() {
-                      selectedOptions = obj;
-                    });
-                  },
-                  selectedItems: selectedOptions,
-                ),
+                child: dropdwonSearchMultiSelectionWidget(),
               ),
               if (state != null && state.hasError) ErrorTextWidget(state: state),
             ],

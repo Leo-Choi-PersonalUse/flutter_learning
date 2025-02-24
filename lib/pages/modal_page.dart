@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '/theme/AppTheme.dart';
 import 'package:bottom_sheet/bottom_sheet.dart';
+import 'package:flutter_learning/components/modal/custom_modal.dart';
+import 'package:flutter_learning/pages/ApplicationFormPage.dart';
 
 class ModalPage extends StatefulWidget {
   const ModalPage({Key? key}) : super(key: key);
@@ -9,6 +11,67 @@ class ModalPage extends StatefulWidget {
 
   @override
   State<ModalPage> createState() => _ModalPageState();
+}
+
+Widget testWidget() {
+  return SingleChildScrollView(
+    child: Column(
+      children: [
+        Text("aaa"),
+        Text("aaa"),
+        Text("aaa"),
+        Text("aaa"),
+        Text("aaa"),
+        Text("aaa"),
+        Text("aaa"),
+        Text("aaa"),
+        Text("aaa"),
+        Text("aaa"),
+        Text("aaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("baaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+        Text("caaa"),
+      ],
+    ),
+  );
 }
 
 class _ModalPageState extends State<ModalPage> {
@@ -40,6 +103,7 @@ class _ModalPageState extends State<ModalPage> {
           ElevatedButton(
             onPressed: () {
               showStickyFlexibleBottomSheet(
+                isSafeArea: true,
                 minHeight: 0,
                 initHeight: 0.5,
                 maxHeight: 1,
@@ -48,7 +112,14 @@ class _ModalPageState extends State<ModalPage> {
                 //backgroundColor: Colors.white,
                 headerBuilder: (BuildContext context, double offset) {
                   return Container(
-                    color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    //color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                       child: Row(
@@ -128,6 +199,18 @@ class _ModalPageState extends State<ModalPage> {
             },
             child: Center(
               child: Text("Show Bottom Sheet - Sticky Header"),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              var a = await CustomModal.show(
+                context: context,
+                body: testWidget(),
+              );
+              print("a");
+            },
+            child: Center(
+              child: Text("Custom Modal"),
             ),
           ),
         ],
