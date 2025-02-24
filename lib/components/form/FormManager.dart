@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_learning/components/form/date_time_widget.dart";
 import "../../model/index.dart";
 import "../form/index.dart";
 
@@ -27,6 +28,12 @@ class FormManager {
         return SignatureWidget(questionObj: questionObj);
       case FieldType.photo:
         return PhotoWidget(questionObj: questionObj);
+      case FieldType.datetime:
+        return DateTimeWidget(questionObj: questionObj, isDate: true, isTime: true);
+      case FieldType.time:
+        return DateTimeWidget(questionObj: questionObj, isDate: false, isTime: true);
+      case FieldType.date:
+        return DateTimeWidget(questionObj: questionObj, isDate: true, isTime: false);
     }
   }
 }

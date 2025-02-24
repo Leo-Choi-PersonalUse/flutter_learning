@@ -15,11 +15,11 @@ class CustomModal {
       maxHeight: 1,
       headerHeight: 20,
       context: context,
-      bottomSheetColor: bottomSheetColor,
+      //bottomSheetColor: bottomSheetColor,
       headerBuilder: (BuildContext context, double offset) {
         return Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            //color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),

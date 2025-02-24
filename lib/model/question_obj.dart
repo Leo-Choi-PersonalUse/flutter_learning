@@ -53,4 +53,7 @@ enum FieldType {
   multi_selection,
   signture,
   photo,
+  datetime,
+  date,
+  time,
 }
