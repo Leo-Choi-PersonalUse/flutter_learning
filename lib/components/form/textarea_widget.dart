@@ -89,7 +89,7 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
 
   Widget TextareaWidget_Horizontal() {
     return Row(
-      crossAxisAlignment: getAlignment(),
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           flex: 1,

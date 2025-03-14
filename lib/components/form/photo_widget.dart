@@ -20,10 +20,13 @@ class PhotoWidget extends StatefulWidget {
 }
 
 class _PhotoWidgetState extends State<PhotoWidget> {
-  late bool isReadOnly;
   late String title;
-  late double fontSize;
+  late double titleFontSize;
+  late bool titleBold;
+  late double answerFontSize;
+  late bool answerBold;
   late bool isVisible;
+  late bool isReadOnly;
   late FieldDirection fieldDirection = FieldDirection.vertical;
 
   List<PhotoObj> photoList = <PhotoObj>[];
@@ -32,7 +35,10 @@ class _PhotoWidgetState extends State<PhotoWidget> {
   void initState() {
     super.initState();
     title = widget.questionObj.title;
-    fontSize = widget.questionObj.answerFontSize;
+    titleFontSize = widget.questionObj.titleFontSize;
+    titleBold = widget.questionObj.titleBold;
+    answerFontSize = widget.questionObj.answerFontSize;
+    answerBold = widget.questionObj.answerBold;
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
     fieldDirection = widget.questionObj.fieldDirection;
@@ -44,11 +50,55 @@ class _PhotoWidgetState extends State<PhotoWidget> {
     setState(() {});
   }
 
+  CrossAxisAlignment getAlignment() {
+    switch (widget.questionObj.titleAlignment) {
+      case TextAlignment.left:
+        return CrossAxisAlignment.start;
+      case TextAlignment.right:
+        return CrossAxisAlignment.end;
+      default:
+        return CrossAxisAlignment.center;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
       visible: isVisible,
-      child: photoWidget(),
+      child: fieldDirection == FieldDirection.vertical ? PhotoWidget_Vertical() : PhotoWidget_Horizontal(),
+    );
+  }
+
+  Widget PhotoWidget_Vertical() {
+    return Column(
+      crossAxisAlignment: getAlignment(),
+      children: [
+        Text(
+          title,
+          style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
+        ),
+        SizedBox(height: 8.0),
+        photoWidget(),
+      ],
+    );
+  }
+
+  Widget PhotoWidget_Horizontal() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 1,
+          child: Text(
+            title,
+            style: TextStyle(fontSize: titleFontSize, fontWeight: titleBold ? FontWeight.bold : FontWeight.normal),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: photoWidget(),
+        ),
+      ],
     );
   }
 

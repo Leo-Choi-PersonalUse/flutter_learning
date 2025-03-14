@@ -19,7 +19,6 @@ class ApplicationFormPage extends StatefulWidget {
 }
 
 class _ApplicationFormPageState extends State<ApplicationFormPage> {
-
   //For scroll to dismiss keyboard
   final FocusNode _focusNode = FocusNode();
 
@@ -75,7 +74,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
     //   OptionObj(label: "選項4", value: "4"),
     //   OptionObj(label: "選項5", value: "5"),
     // ]),
-    // QuestionObj(title: "單項選擇", fieldType: FieldType.single_selection, fieldDirection: FieldDirection.vertical, options: [
+    // QuestionObj(title: "單項選擇", fieldType: FieldType.single_selection ,fieldDirection: FieldDirection.vertical, options: [
     //   OptionObj(label: "選項1", value: "1"),
     //   OptionObj(label: "選項2", value: "2"),
     //   OptionObj(label: "選項3", value: "3"),
@@ -96,7 +95,8 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
     //   OptionObj(label: "選項4", value: "4"),
     //   OptionObj(label: "選項5", value: "5"),
     // ]),
-    // QuestionObj(title: "標目", fieldType: FieldType.photo),
+    QuestionObj(title: "標目", fieldType: FieldType.photo),
+    QuestionObj(title: "標目", fieldType: FieldType.photo, fieldDirection: FieldDirection.horizontal),
 
     QuestionObj(title: "日期和日子", fieldType: FieldType.datetime, fieldDirection: FieldDirection.vertical),
     QuestionObj(title: "日期和日子", fieldType: FieldType.datetime, fieldDirection: FieldDirection.horizontal),

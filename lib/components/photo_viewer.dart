@@ -27,8 +27,11 @@ class _PhotoViewerState extends State<PhotoViewer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(widget.title ?? ''),
+        backgroundColor: Colors.black,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Container(
           child: PhotoViewGallery.builder(
@@ -37,7 +40,7 @@ class _PhotoViewerState extends State<PhotoViewer> {
         builder: (BuildContext context, int index) {
           return PhotoViewGalleryPageOptions(
             imageProvider: MemoryImage(base64Decode(widget.photoList[index].base64!)),
-            initialScale: PhotoViewComputedScale.contained ,
+            initialScale: PhotoViewComputedScale.contained,
             //heroAttributes: PhotoViewHeroAttributes(tag: widget.photoList[index].),
             //heroAttributes: PhotoViewHeroAttributes(tag: galleryItems[index].id),
           );
@@ -51,8 +54,13 @@ class _PhotoViewerState extends State<PhotoViewer> {
           ),
         ),
         //backgroundDecoration: widget.backgroundDecoration,
-        //pageController: widget.pageController,
-        //onPageChanged: onPageChanged,
+        onPageChanged: (index) {
+          _pageController.animateToPage(
+            index,
+            duration: Duration(milliseconds: 100), // Set animation duration to 0.1 seconds
+            curve: Curves.easeInOut, // Use easeInOut curve for smooth animation
+          );
+        },
       )),
     );
   }

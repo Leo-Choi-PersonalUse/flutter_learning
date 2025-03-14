@@ -5,7 +5,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import './ApplicationFormPage.dart';
 import './AppFormBuilder.dart';
 import '/theme/AppTheme.dart';
-import './page_index.dart';
+import 'package:flutter_learning/pages/index.dart';
 import '../components/dialog/confirm_dialog.dart';
 
 
@@ -22,6 +22,10 @@ class _MenuPageState extends State<MenuPage> {
   //List<String> items = ["Application Form", "Setting", "Menu","Form Builder",'Modal'];
 
   List<dynamic> items = [
+    {
+      "name": "Test Page",
+      "content": TestPage(),
+    },
     {
       "name": "Application Form",
       "content": ApplicationFormPage(),
@@ -49,7 +53,7 @@ class _MenuPageState extends State<MenuPage> {
     {
       "name": "Prop",
       "content": PropTestPage(),
-    }
+    },
   ];
 
   double itemGap = 5.0;
