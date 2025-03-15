@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:flutter_learning/theme/AppTheme.dart';
 import './constant.dart';
 import "../../model/index.dart";
 
@@ -41,9 +42,9 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
 
   CrossAxisAlignment getAlignment() {
     switch (widget.questionObj.titleAlignment) {
-      case TextAlignment.left:
+      case TextAlignment.centerLeft:
         return CrossAxisAlignment.start;
-      case TextAlignment.right:
+      case TextAlignment.centerRight:
         return CrossAxisAlignment.end;
       default:
         return CrossAxisAlignment.center;
@@ -80,6 +81,11 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: BorderSide(color: AppTheme.of(context).error),
+            ),
+            errorStyle: TextStyle(color: AppTheme.of(context).error, fontSize: widget.questionObj.errorTextFontSize),
             //labelText: title,
           ),
         ),
@@ -114,6 +120,11 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(color: AppTheme.of(context).error),
+              ),
+              errorStyle: TextStyle(color: AppTheme.of(context).error, fontSize: widget.questionObj.errorTextFontSize),
             ),
           ),
         ),

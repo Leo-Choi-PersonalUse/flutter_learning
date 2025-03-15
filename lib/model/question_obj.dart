@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'option_obj.dart';
 
 class QuestionObj {
@@ -14,16 +15,22 @@ class QuestionObj {
   double answerFontSize;
   bool answerBold;
 
+  //User Input
+  var value;
+
   FieldType fieldType;
   FieldDirection fieldDirection;
   List<OptionObj> options;
+
+  //errorStyle
+  double errorTextFontSize = 12;
 
   QuestionObj(
       {this.isVisible = true,
       this.isReadOnly = false,
       required this.title,
       this.titleFontSize = 20,
-      this.titleAlignment = TextAlignment.left,
+      this.titleAlignment = TextAlignment.centerLeft,
       this.titleBold = false,
       required this.fieldType,
       this.answerFontSize = 20,
@@ -38,9 +45,15 @@ enum FieldDirection {
 }
 
 enum TextAlignment {
-  left,
-  right,
   center,
+  centerLeft,
+  centerRight,
+  bottomCenter,
+  bottomLeft,
+  bottomRight,
+  topCenter,
+  topLeft,
+  topRight,
 }
 
 enum FieldType {

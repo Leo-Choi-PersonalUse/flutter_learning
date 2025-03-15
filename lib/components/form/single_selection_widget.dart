@@ -42,9 +42,9 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
 
   CrossAxisAlignment getAlignment() {
     switch (widget.questionObj.titleAlignment) {
-      case TextAlignment.left:
+      case TextAlignment.centerLeft:
         return CrossAxisAlignment.start;
-      case TextAlignment.right:
+      case TextAlignment.centerRight:
         return CrossAxisAlignment.end;
       default:
         return CrossAxisAlignment.center;

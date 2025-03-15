@@ -26,113 +26,87 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
   final _formKey = GlobalKey<FormState>();
 
   List<QuestionObj> question = [
-    // QuestionObj(title: "標目", fieldType: FieldType.heading),
-    // QuestionObj(title: "文字", fieldType: FieldType.text),
-    // QuestionObj(title: "文字", fieldType: FieldType.text, fieldDirection: FieldDirection.horizontal),
-    // QuestionObj(title: "多行文字", fieldType: FieldType.textarea),
-    // QuestionObj(title: "簽名", fieldType: FieldType.signture),
-    // QuestionObj(title: "單選按鈕", fieldType: FieldType.radio, options: [
-    //   OptionObj(label: "選項123456789", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    //   OptionObj(label: "選項6", value: "6"),
-    //   OptionObj(label: "選項7", value: "7"),
-    //   OptionObj(label: "選項8", value: "8"),
-    //   OptionObj(label: "選項9", value: "9"),
-    // ]),
-    // QuestionObj(title: "單選按鈕", fieldType: FieldType.radio, fieldDirection: FieldDirection.horizontal, options: [
-    //   OptionObj(label: "選項1", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    // ]),
-    // QuestionObj(title: "多選按鈕", fieldType: FieldType.checkbox, options: [
-    //   OptionObj(label: "選項123456789", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    //   OptionObj(label: "選項6", value: "6"),
-    //   OptionObj(label: "選項7", value: "7"),
-    //   OptionObj(label: "選項8", value: "8"),
-    //   OptionObj(label: "選項9", value: "9"),
-    // ]),
-    // QuestionObj(title: "多選按鈕", fieldType: FieldType.checkbox, fieldDirection: FieldDirection.horizontal, options: [
-    //   OptionObj(label: "選項1", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    // ]),
-    // QuestionObj(title: "單項選擇", fieldType: FieldType.single_selection, fieldDirection: FieldDirection.horizontal, options: [
-    //   OptionObj(label: "選項1", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    // ]),
-    // QuestionObj(title: "單項選擇", fieldType: FieldType.single_selection ,fieldDirection: FieldDirection.vertical, options: [
-    //   OptionObj(label: "選項1", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    // ]),
-    // QuestionObj(title: "雙項選擇", fieldType: FieldType.multi_selection, fieldDirection: FieldDirection.horizontal, options: [
-    //   OptionObj(label: "選項1", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    // ]),
-    // QuestionObj(title: "雙項選擇", fieldType: FieldType.multi_selection, fieldDirection: FieldDirection.vertical, options: [
-    //   OptionObj(label: "選項1", value: "1"),
-    //   OptionObj(label: "選項2", value: "2"),
-    //   OptionObj(label: "選項3", value: "3"),
-    //   OptionObj(label: "選項4", value: "4"),
-    //   OptionObj(label: "選項5", value: "5"),
-    // ]),
+    QuestionObj(title: "標目", fieldType: FieldType.heading),
+    QuestionObj(title: "文字", fieldType: FieldType.text),
+    QuestionObj(title: "文字", fieldType: FieldType.text, fieldDirection: FieldDirection.horizontal),
+    QuestionObj(title: "多行文字", fieldType: FieldType.textarea),
+    QuestionObj(title: "簽名", fieldType: FieldType.signture),
+    QuestionObj(title: "單選按鈕", fieldType: FieldType.radio, options: [
+      OptionObj(label: "選項123456789", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+      OptionObj(label: "選項6", value: "6"),
+      OptionObj(label: "選項7", value: "7"),
+      OptionObj(label: "選項8", value: "8"),
+      OptionObj(label: "選項9", value: "9"),
+    ]),
+    QuestionObj(title: "單選按鈕", fieldType: FieldType.radio, fieldDirection: FieldDirection.horizontal, options: [
+      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+    ]),
+    QuestionObj(title: "多選按鈕", fieldType: FieldType.checkbox, options: [
+      OptionObj(label: "選項123456789", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+      OptionObj(label: "選項6", value: "6"),
+      OptionObj(label: "選項7", value: "7"),
+      OptionObj(label: "選項8", value: "8"),
+      OptionObj(label: "選項9", value: "9"),
+    ]),
+    QuestionObj(title: "多選按鈕", fieldType: FieldType.checkbox, fieldDirection: FieldDirection.horizontal, options: [
+      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+    ]),
+    QuestionObj(title: "單項選擇", fieldType: FieldType.single_selection, fieldDirection: FieldDirection.horizontal, options: [
+      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+    ]),
+    QuestionObj(title: "單項選擇", fieldType: FieldType.single_selection, fieldDirection: FieldDirection.vertical, options: [
+      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+    ]),
+    QuestionObj(title: "雙項選擇", fieldType: FieldType.multi_selection, fieldDirection: FieldDirection.horizontal, options: [
+      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+    ]),
+    QuestionObj(title: "雙項選擇", fieldType: FieldType.multi_selection, fieldDirection: FieldDirection.vertical, options: [
+      OptionObj(label: "選項1", value: "1"),
+      OptionObj(label: "選項2", value: "2"),
+      OptionObj(label: "選項3", value: "3"),
+      OptionObj(label: "選項4", value: "4"),
+      OptionObj(label: "選項5", value: "5"),
+    ]),
     QuestionObj(title: "標目", fieldType: FieldType.photo),
     QuestionObj(title: "標目", fieldType: FieldType.photo, fieldDirection: FieldDirection.horizontal),
-
     QuestionObj(title: "日期和日子", fieldType: FieldType.datetime, fieldDirection: FieldDirection.vertical),
     QuestionObj(title: "日期和日子", fieldType: FieldType.datetime, fieldDirection: FieldDirection.horizontal),
   ];
 
-  static List<dynamic> _animals = [
-    //Don't use {"id": 1, "name": "Lion"}
-    (id: 1, name: "Lion"),
-    (id: 2, name: "Flamingo"),
-    (id: 3, name: "Hippo"),
-    (id: 4, name: "Horse"),
-    (id: 5, name: "Tiger"),
-    (id: 6, name: "Penguin"),
-    (id: 7, name: "Spider"),
-    (id: 8, name: "Snake"),
-    (id: 9, name: "Bear"),
-  ];
-
-  final _items = _animals.map((animal) => MultiSelectItem<dynamic>(animal, animal.name)).toList();
-
-  List<dynamic> _selectedAnimals5 = [
-    (id: 8, name: "Snake"),
-    (id: 9, name: "Bear"),
-  ];
-
-  String value = 'flutter';
-  List<S2Choice<String>> options = [
-    S2Choice<String>(value: 'ion', title: 'Ionic'),
-    S2Choice<String>(value: 'flu', title: 'Flutter'),
-    S2Choice<String>(value: 'rea', title: 'React Native'),
-  ];
 
   @override
   void initState() {
     super.initState();
   }
+
 
   Widget build(BuildContext context) {
     return Scaffold(

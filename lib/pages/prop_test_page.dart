@@ -67,7 +67,10 @@ class _TestWidgetState extends State<TestWidget> {
         Text("Child: " + test_str_widget_state),
         IconButton(
             onPressed: () {
-              if (widget.add != null) widget.add!();
+              setState(() {
+                test_str_widget_state += "d";
+              });
+              //if (widget.add != null) widget.add!();
             },
             icon: Icon(Icons.safety_check))
       ],

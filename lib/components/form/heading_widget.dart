@@ -25,9 +25,9 @@ class _HeadingState extends State<HeadingWidget> {
 
   Alignment getAlignment() {
     switch (widget.questionObj.titleAlignment) {
-      case TextAlignment.left:
+      case TextAlignment.centerLeft:
         return Alignment.centerLeft;
-      case TextAlignment.right:
+      case TextAlignment.centerRight:
         return Alignment.centerRight;
       default:
         return Alignment.center;

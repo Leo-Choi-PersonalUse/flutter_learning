@@ -51,9 +51,9 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
 
   CrossAxisAlignment getAlignment() {
     switch (widget.questionObj.titleAlignment) {
-      case TextAlignment.left:
+      case TextAlignment.centerLeft:
         return CrossAxisAlignment.start;
-      case TextAlignment.right:
+      case TextAlignment.centerRight:
         return CrossAxisAlignment.end;
       default:
         return CrossAxisAlignment.center;
@@ -161,6 +161,11 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: BorderSide(color: AppTheme.of(context).error),
+        ),
+        errorStyle: TextStyle(color: AppTheme.of(context).error, fontSize: widget.questionObj.errorTextFontSize),
         suffixIcon: const Icon(Icons.date_range),
         contentPadding:
             EdgeInsets.symmetric(vertical: contentPaddingVertical, horizontal: contentPaddingHorizontal), // Adjust padding to reduce height
@@ -188,6 +193,11 @@ class _DateTimeWidgetState extends State<DateTimeWidget> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: BorderSide(color: AppTheme.of(context).error),
+        ),
+        errorStyle: TextStyle(color: AppTheme.of(context).error, fontSize: widget.questionObj.errorTextFontSize),
         suffixIcon: const Icon(Icons.access_time),
         contentPadding:
             EdgeInsets.symmetric(vertical: contentPaddingVertical, horizontal: contentPaddingHorizontal), // Adjust padding to reduce height

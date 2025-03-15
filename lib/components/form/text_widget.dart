@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:flutter_learning/theme/AppTheme.dart';
 import './constant.dart';
 import "../../model/index.dart";
 
@@ -21,6 +22,8 @@ class _TextWidgetState extends State<TextWidget> {
   late bool isReadOnly;
   late FieldDirection fieldDirection = FieldDirection.vertical;
 
+
+  TextEditingController controller = TextEditingController();
   String value = '';
 
   @override
@@ -34,6 +37,7 @@ class _TextWidgetState extends State<TextWidget> {
     isVisible = widget.questionObj.isVisible;
     isReadOnly = widget.questionObj.isReadOnly;
     fieldDirection = widget.questionObj.fieldDirection;
+
   }
 
   String getValue() {
@@ -50,9 +54,9 @@ class _TextWidgetState extends State<TextWidget> {
 
   CrossAxisAlignment getAlignment() {
     switch (widget.questionObj.titleAlignment) {
-      case TextAlignment.left:
+      case TextAlignment.centerLeft:
         return CrossAxisAlignment.start;
-      case TextAlignment.right:
+      case TextAlignment.centerRight:
         return CrossAxisAlignment.end;
       default:
         return CrossAxisAlignment.center;
@@ -77,11 +81,16 @@ class _TextWidgetState extends State<TextWidget> {
           },
           style: TextStyle(fontSize: answerfontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
           enabled: !isReadOnly,
-          controller: TextEditingController(text: value),
+          controller: controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: BorderSide(color: AppTheme.of(context).error),
+            ),
+            errorStyle: TextStyle(color: AppTheme.of(context).error, fontSize: widget.questionObj.errorTextFontSize),
           ),
         ),
       ],
@@ -110,11 +119,16 @@ class _TextWidgetState extends State<TextWidget> {
             },
             style: TextStyle(fontSize: answerfontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
             enabled: !isReadOnly,
-            controller: TextEditingController(text: value),
+            controller: controller,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(color: AppTheme.of(context).error),
+              ),
+              errorStyle: TextStyle(color: AppTheme.of(context).error, fontSize: widget.questionObj.errorTextFontSize),
             ),
           ),
         ),
