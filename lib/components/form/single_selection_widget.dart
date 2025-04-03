@@ -26,6 +26,10 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
 
   OptionObj selectedOption = OptionObj(label: "", value: "");
 
+  OptionObj getValue() {
+    return selectedOption;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -87,8 +91,7 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
   }
 
   Widget SelectedItemBuilder(BuildContext context, dynamic? selectedItem) {
-    return Text(selectedOption.label ?? "",
-        style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal));
+    return Text(selectedOption.label ?? "", style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal));
   }
 
   Widget SingleSelectionWidget_Vertical({required FormFieldState state}) {
@@ -135,7 +138,7 @@ class _SingleSelectionWidgetState extends State<SingleSelectionWidget> {
       ],
     );
   }
-  
+
   Widget SingleSelectionWidget_Horizontal({required FormFieldState state}) {
     return Row(
       crossAxisAlignment: getAlignment(),

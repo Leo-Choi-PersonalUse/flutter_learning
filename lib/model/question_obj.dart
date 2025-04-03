@@ -17,6 +17,7 @@ class QuestionObj {
 
   //User Input
   var value;
+  dynamic? answerKey = GlobalKey();
 
   FieldType fieldType;
   FieldDirection fieldDirection;

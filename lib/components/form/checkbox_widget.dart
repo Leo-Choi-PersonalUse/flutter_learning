@@ -25,6 +25,13 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
   late FieldDirection fieldDirection = FieldDirection.vertical;
   late Map<String, bool> selectedOptions = {};
 
+  List<OptionObj> getValue() {
+    return selectedOptions.entries
+        .where((element) => element.value == true)
+        .map((e) => options.firstWhere((option) => option.value == e.key))
+        .toList();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -179,10 +186,10 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
                 onChanged: isReadOnly
                     ? null
                     : (bool? value) {
-                  setState(() {
-                    selectedOptions[e.value] = value!;
-                  });
-                },
+                        setState(() {
+                          selectedOptions[e.value] = value!;
+                        });
+                      },
               ),
             ),
             Expanded(
@@ -190,10 +197,10 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
                 onTap: isReadOnly
                     ? null
                     : () {
-                  setState(() {
-                    selectedOptions[e.value] = !selectedOptions[e.value]!;
-                  });
-                },
+                        setState(() {
+                          selectedOptions[e.value] = !selectedOptions[e.value]!;
+                        });
+                      },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 0.0), // Add some space between checkbox and text
                   child: Text(

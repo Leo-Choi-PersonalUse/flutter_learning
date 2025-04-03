@@ -11,29 +11,29 @@ class FormManager {
   Widget getWidget() {
     switch (questionObj.fieldType) {
       case FieldType.heading:
-        return HeadingWidget(questionObj: questionObj);
+        return HeadingWidget(questionObj: questionObj, key: questionObj.answerKey);
       case FieldType.text:
-        return TextWidget(questionObj: questionObj);
+        return TextWidget(questionObj: questionObj, key: questionObj.answerKey);
       case FieldType.textarea:
-        return TextareaWidget(questionObj: questionObj);
+        return TextareaWidget(questionObj: questionObj, key: questionObj.answerKey);
       case FieldType.checkbox:
-        return CheckboxWidget(questionObj: questionObj);
+        return CheckboxWidget(questionObj: questionObj, key: questionObj.answerKey);
       case FieldType.radio:
-        return RadioWidget(questionObj: questionObj);
+        return RadioWidget(questionObj: questionObj, key: questionObj.answerKey);
       case FieldType.single_selection:
-        return SingleSelectionWidget(questionObj: questionObj);
+        return SingleSelectionWidget(questionObj: questionObj, key: questionObj.answerKey);
       case FieldType.multi_selection:
-        return MultiSelectionWidget(questionObj: questionObj);
+        return MultiSelectionWidget(questionObj: questionObj, key: questionObj.answerKey);
       case FieldType.signture:
-        return SignatureWidget(questionObj: questionObj);
+        return SignatureWidget(questionObj: questionObj, key: questionObj.answerKey);
       case FieldType.photo:
-        return PhotoWidget(questionObj: questionObj);
+        return PhotoWidget(questionObj: questionObj, key: questionObj.answerKey);
       case FieldType.datetime:
-        return DateTimeWidget(questionObj: questionObj, isDate: true, isTime: true);
+        return DateTimeWidget(questionObj: questionObj, isDate: true, isTime: true, key: questionObj.answerKey);
       case FieldType.time:
-        return DateTimeWidget(questionObj: questionObj, isDate: false, isTime: true);
+        return DateTimeWidget(questionObj: questionObj, isDate: false, isTime: true, key: questionObj.answerKey);
       case FieldType.date:
-        return DateTimeWidget(questionObj: questionObj, isDate: true, isTime: false);
+        return DateTimeWidget(questionObj: questionObj, isDate: true, isTime: false, key: questionObj.answerKey);
     }
   }
 }

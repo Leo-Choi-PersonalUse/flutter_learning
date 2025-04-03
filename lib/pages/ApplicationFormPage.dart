@@ -101,12 +101,10 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
     QuestionObj(title: "日期和日子", fieldType: FieldType.datetime, fieldDirection: FieldDirection.horizontal),
   ];
 
-
   @override
   void initState() {
     super.initState();
   }
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,6 +138,11 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
                   onPressed: () {
                     // Add your button press logic here
                     _formKey.currentState!.validate();
+                    question.forEach((element) {
+                      if (element.fieldType != FieldType.heading) {
+                        print(element.answerKey.currentState.getValue());
+                      }
+                    });
                   },
                   child: Text("Submit"),
                 ),

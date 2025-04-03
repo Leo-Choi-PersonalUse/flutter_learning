@@ -39,6 +39,10 @@ class _RadioWidgetState extends State<RadioWidget> {
     options = widget.questionObj.options;
   }
 
+  String getValue() {
+    return selectedOption;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Visibility(

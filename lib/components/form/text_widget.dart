@@ -9,10 +9,10 @@ class TextWidget extends StatefulWidget {
   TextWidget({Key? key, required this.questionObj}) : super(key: key);
 
   @override
-  State<TextWidget> createState() => _TextWidgetState();
+  State<TextWidget> createState() => TextWidgetState();
 }
 
-class _TextWidgetState extends State<TextWidget> {
+class TextWidgetState extends State<TextWidget> {
   late String title;
   late double titleFontSize;
   late bool titleBold;
@@ -22,9 +22,7 @@ class _TextWidgetState extends State<TextWidget> {
   late bool isReadOnly;
   late FieldDirection fieldDirection = FieldDirection.vertical;
 
-
   TextEditingController controller = TextEditingController();
-  String value = '';
 
   @override
   void initState() {
@@ -41,7 +39,7 @@ class _TextWidgetState extends State<TextWidget> {
   }
 
   String getValue() {
-    return value;
+    return controller.text;
   }
 
   @override

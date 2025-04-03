@@ -24,6 +24,10 @@ class _SignatureWidgetState extends State<SignatureWidget> {
 
   PhotoObj? signatureImage;
 
+  PhotoObj? getValue() {
+    return signatureImage;
+  }
+
   @override
   void initState() {
     super.initState();

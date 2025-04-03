@@ -28,6 +28,10 @@ class _MultiSelectionWidgetState extends State<MultiSelectionWidget> {
 
   List<OptionObj> selectedOptions = [];
 
+  List<OptionObj> getValue() {
+    return selectedOptions;
+  }
+
   @override
   void initState() {
     super.initState();

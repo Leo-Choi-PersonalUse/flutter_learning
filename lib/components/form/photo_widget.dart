@@ -31,6 +31,10 @@ class _PhotoWidgetState extends State<PhotoWidget> {
 
   List<PhotoObj> photoList = <PhotoObj>[];
 
+  List<PhotoObj> getValue() {
+    return photoList;
+  }
+
   @override
   void initState() {
     super.initState();

@@ -22,7 +22,7 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
   late bool isReadOnly;
   late FieldDirection fieldDirection = FieldDirection.vertical;
 
-  String value = '';
+  TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
   }
 
   String getValue() {
-    return value;
+    return controller.text;
   }
 
   CrossAxisAlignment getAlignment() {
@@ -76,7 +76,7 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
           maxLines: null,
           enabled: !isReadOnly,
           style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
-          controller: TextEditingController(text: value),
+          controller: controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -115,7 +115,7 @@ class _TextareaWidgetWidgetState extends State<TextareaWidget> {
             },
             enabled: !isReadOnly,
             style: TextStyle(fontSize: answerFontSize, fontWeight: answerBold ? FontWeight.bold : FontWeight.normal),
-            controller: TextEditingController(text: value),
+            controller: controller,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.0),
