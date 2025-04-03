@@ -128,7 +128,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
                     children: question
                         .map((q) => Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 20), // each item padding
-                              child: FormManager(questionObj: q).getWidget(),
+                              child: FormManager().getWidget(questionObj: q),
                             ))
                         .toList(),
                   )),
@@ -138,11 +138,7 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
                   onPressed: () {
                     // Add your button press logic here
                     _formKey.currentState!.validate();
-                    question.forEach((element) {
-                      if (element.fieldType != FieldType.heading) {
-                        print(element.answerKey.currentState.getValue());
-                      }
-                    });
+                    FormManager().getValue_all(list: question); // Get all values from the form
                   },
                   child: Text("Submit"),
                 ),

@@ -4,11 +4,11 @@ import "../../model/index.dart";
 import "../form/index.dart";
 
 class FormManager {
-  QuestionObj questionObj;
+  //QuestionObj questionObj;
 
-  FormManager({required this.questionObj});
+  //FormManager({required this.questionObj});
 
-  Widget getWidget() {
+  Widget getWidget({required QuestionObj questionObj}) {
     switch (questionObj.fieldType) {
       case FieldType.heading:
         return HeadingWidget(questionObj: questionObj, key: questionObj.answerKey);
@@ -35,5 +35,13 @@ class FormManager {
       case FieldType.date:
         return DateTimeWidget(questionObj: questionObj, isDate: true, isTime: false, key: questionObj.answerKey);
     }
+  }
+
+  void getValue_all({required List<QuestionObj> list}) {
+    list.forEach((element) {
+      if (element.fieldType != FieldType.heading) {
+        print(element.answerKey.currentState?.getValue());
+      }
+    });
   }
 }
