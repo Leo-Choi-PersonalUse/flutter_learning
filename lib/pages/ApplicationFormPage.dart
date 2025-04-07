@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_learning/components/form/text_widget.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
-import '../components/MultiSelectWidget.dart';
-import '../components/MultiSelectWidget2.dart';
-
-import 'package:sticky_headers/sticky_headers.dart';
-import 'package:awesome_select/awesome_select.dart';
-import './../components/form/index.dart';
+import "package:flutter_learning/components/time_line.dart";
 import "../model/index.dart";
 import "../components/form/FormManager.dart";
 
@@ -124,14 +117,18 @@ class _ApplicationFormPageState extends State<ApplicationFormPage> {
               children: [
                 Expanded(
                   child: SingleChildScrollView(
-                      child: Column(
-                    children: question
-                        .map((q) => Padding(
+                    child: Column(children: [
+                      TimeLine(),
+                      ...question
+                          .map(
+                            (q) => Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 20), // each item padding
                               child: FormManager().getWidget(questionObj: q),
-                            ))
-                        .toList(),
-                  )),
+                            ),
+                          )
+                          .toList(),
+                    ]),
+                  ),
                 ),
                 SizedBox(height: 20.0), // Space between ListView and button
                 ElevatedButton(

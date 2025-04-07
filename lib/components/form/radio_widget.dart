@@ -39,8 +39,8 @@ class _RadioWidgetState extends State<RadioWidget> {
     options = widget.questionObj.options;
   }
 
-  String getValue() {
-    return selectedOption;
+  OptionObj getValue() {
+    return options.firstWhere((element) => element.value == selectedOption, orElse: () => OptionObj(label: "", value: ""));
   }
 
   @override

@@ -9,10 +9,10 @@ class TextWidget extends StatefulWidget {
   TextWidget({Key? key, required this.questionObj}) : super(key: key);
 
   @override
-  State<TextWidget> createState() => TextWidgetState();
+  State<TextWidget> createState() => _TextWidgetState();
 }
 
-class TextWidgetState extends State<TextWidget> {
+class _TextWidgetState extends State<TextWidget> {
   late String title;
   late double titleFontSize;
   late bool titleBold;
